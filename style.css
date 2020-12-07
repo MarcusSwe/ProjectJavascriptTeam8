@@ -36,3 +36,11 @@ aside {
     height: 400px;      /* will be changed to viewport*/ 
     overflow: auto;
 }
+/*
+#template-individual-note{
+    visibility: hidden;
+}
+#draft-individual-note{
+    visibility: hidden;
+}
+*/
