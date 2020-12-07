@@ -6,6 +6,8 @@ document
   .getElementById("constr-close")
   .addEventListener("click", newNoteWindowClose);
 newNoteWindowClose();
+
+//arrays to save all note
 var allNotesArray = [];
 
 function newNoteWindowOpen() {
@@ -19,42 +21,71 @@ var submitButton = document.getElementById("constr-submit");
 submitButton.addEventListener("click", function () {
   getInputFromForm();
 });
+
 /*gets information on note when user hits submit button. Sets al information to a new 
 object "userNote" and pushes that to the AllUserNotes Array and sends note data to
 MakeNewNote constructor*/
 function getInputFromForm() {
   var userInputTitle = document.getElementById("constr-title").value;
   console.log(userInputTitle);
-  var userInputTag1 = document.getElementById("constr-tag1").checked;
-  console.log(userInputTag1);
-  var userInputTag2 = document.getElementById("constr-tag2").checked;
-  console.log(userInputTag2);
-  var userInputTag3 = document.getElementById("constr-tag3").checked;
-  console.log(userInputTag3);
+
+  //get tags if it is select
+  var htmlTags = document.querySelectorAll('[js-tag]');
+  var userInputTags = [];
+  htmlTags.forEach((item) => {
+    var check = item.checked;
+    if (check == true) {
+      userInputTags.push(item.value);
+    }
+  })
+  console.log(userInputTags);
+
+  /*   var userInputTag1 = document.getElementById("constr-tag1").checked;
+    console.log(userInputTag1);
+    var userInputTag2 = document.getElementById("constr-tag2").checked;
+    console.log(userInputTag2);
+    var userInputTag3 = document.getElementById("constr-tag3").checked;
+    console.log(userInputTag3); */
+
   var userInputSubject = document.getElementById("constr-subject").value;
   console.log(userInputSubject);
-  var userInputDate = new Date().toDateString();
+
+  //var userInputDate = new Date().toDateString();
+  var userInputDate = new Date();
   console.log(userInputDate);
 
-  var userNote = [
+  /*   var userNote = [
+      userInputTitle,
+      userInputTag1,
+      userInputTag2,
+      userInputTag3,
+      userInputSubject,
+      userInputDate,
+    ];
+    allNotesArray.push(userNote);
+    console.log(allNotesArray);
+
+    var note1 = new MakeNewNote(
+      userInputTitle,
+      userInputTag1,
+      userInputTag2,
+      userInputTag3,
+      userInputSubject,
+      userInputDate
+    ); */
+
+  // create new note class
+  var newNote = new Note(
     userInputTitle,
-    userInputTag1,
-    userInputTag2,
-    userInputTag3,
+    userInputTags,
     userInputSubject,
-    userInputDate,
-  ];
-  allNotesArray.push(userNote);
+    userInputDate);
+
+  allNotesArray.push(newNote);
   console.log(allNotesArray);
 
-  var note1 = new MakeNewNote(
-    userInputTitle,
-    userInputTag1,
-    userInputTag2,
-    userInputTag3,
-    userInputSubject,
-    userInputDate
-  );
+  createNoteDiv(newNote);
+
   document.getElementById("constr-form").reset();
   //newNoteWindowClose();
 }
@@ -62,7 +93,20 @@ function getInputFromForm() {
 Constructor for notes.
 All "ID's" have the note number added to them so that the constructor adds data to the correct note
 */
-function MakeNewNote(title, tag1, tag2, tag3, subject, date) {
+var startId = 1;
+
+function Note(title, tags, subject, date) {
+  this.title = title;
+  this.tags = tags;
+  this.subject = subject;
+  this.date = date;
+
+  this.replies = [];
+  this.number = startId++;
+}
+
+/* 
+  function MakeNewNote(title, tag1, tag2, tag3, subject, date) {
   this.title = title;
   this.tag1 = tag1;
   this.tag2 = tag2;
@@ -70,6 +114,7 @@ function MakeNewNote(title, tag1, tag2, tag3, subject, date) {
   this.subject = subject;
   this.date = date;
   var number = allNotesArray.length;
+
   //new element: main div
   var newMainDiv = document.createElement("DIV");
   newMainDiv.setAttribute("class", "idividualNote");
@@ -158,8 +203,8 @@ function MakeNewNote(title, tag1, tag2, tag3, subject, date) {
   newTitleReplyTextarea.setAttribute("class", "replyTextarea");
   document
     .getElementById("new-reply-child-div" + number)
-    .appendChild(newTitleReplyTextarea);
-  /* setting eventlistener to reply button. Adds data from textfield to new div in reply parent div*/
+    .appendChild(newTitleReplyTextarea); 
+    // setting eventlistener to reply button. Adds data from textfield to new div in reply parent div
   document
     .getElementById("new-title-reply-button" + number)
     .addEventListener("click", function () {
@@ -173,5 +218,61 @@ function MakeNewNote(title, tag1, tag2, tag3, subject, date) {
       newReply.setAttribute("id", "reply-div" + number);
       newReply.setAttribute("class", "reply");
       document.getElementById("new-title-reply-textarea" + number).value = "";
+    });
+  }
+    */
+
+
+function createNoteDiv(note) {
+  var title = note.title;
+  var tags = note.tags;
+  var subject = note.subject;
+  var date = note.date;
+  var number = note.number;
+
+  //creat String to show
+  var tagString = "";
+  tags.forEach((item) => {
+    tagString += item + " ";
+  });
+
+  var dateString = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+
+  //new element: main div
+  var newMainDiv = document.createElement("DIV");
+  newMainDiv.setAttribute("class", "idividualNote");
+  newMainDiv.setAttribute("id", "new-main-div" + number);
+  document.getElementById("main-parent").appendChild(newMainDiv);
+  
+  // new element: note info (contains "number", "title", "tags". "date" and "answer button")
+  newMainDiv.innerHTML =
+    "<div id='new-subject-div+number+" + number + "'>" + subject + "</div>" +
+    "<div class='noteInfo' id='new-note-info-div" + number + "'>" +
+    "<div class='noteNumber' id='new-number-div" + number + "'>" + number + "</div>" +
+    "<div id='new-title-div" + number + "'>" + title + "</div>" +
+    "<div id='new-date-div" + number + "'>" + dateString + "</div>" +
+    "<div id='new-tags-div" + number + "'>" + tagString + "</div>" +
+    "</div>" +
+    "<div id='new-reply-parent-div" + number + "' class='replyParent'>" +
+    "<div id='new-reply-child-div" + number + "' class='replyChild'>" +
+    "<button id='new-title-reply-button" + number + "' class='replyButton'>Reply</button>" +
+    "<textarea id='new-title-reply-textarea" + number + "' placeholder='Write your reply here and press 'Reply'' class='replyTextarea'>"+
+    "</textarea></div></div>"
+
+  // setting eventlistener to reply button. Adds data from textfield to new div in reply parent div
+  document
+    .getElementById("new-title-reply-button" + number)
+    .addEventListener("click", function () {
+      var newReply = document.createElement("DIV");
+      var userReplyText = document.getElementById("new-title-reply-textarea" + number)
+        .value;
+      newReply.innerHTML = userReplyText;
+      document
+        .getElementById("new-reply-parent-div" + number)
+        .appendChild(newReply);
+      newReply.setAttribute("id", "reply-div" + number);
+      newReply.setAttribute("class", "reply");
+      document.getElementById("new-title-reply-textarea" + number).value = "";
+      note.replies.push(userReplyText);
     });
 }
