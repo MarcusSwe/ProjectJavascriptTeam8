@@ -13,7 +13,13 @@
 </head>
 
 <body>
+  <button id="user-account">Account</button>
+  <button id="logout-button"style="visibility: hidden;" >Logout</button>
   <button id="new-note">New Note</button>
+  <p id="login-state">Not Logged In</p>
+  <div class= "loginDiv" id="login-div">
+    
+  </div>
 
   <!-- Main parent all notes-->
   <div id="main-parent" class="mainParentNote">
@@ -26,7 +32,7 @@
           <label for="constr-title">New Note Title</label>
           <input id="constr-title" type="text" name="constr-title" value="Input title"> <br>
 
-          <input type="checkbox" id="constr-tag1" name="tag1" value="Fun" js-tag>
+          <input type=checkbox id="constr-tag1" name="tag1" value="Fun" js-tag>
           <label for="tag1"> Tag as Fun</label><br>
           <input type="checkbox" id="constr-tag2" name="tag2" value="Serious" js-tag>
           <label for="tag2"> Tag as Serious</label><br>
@@ -50,7 +56,7 @@
 
 
     <!-- Template Note starts here-->
-    <div id="template-individual-note" class="individualNote">
+    <!-- <div id="template-individual-note" class="individualNote">
       <div id="template-subject">
         blalblala dsfgsd sdg dsfgs sy df ags dsfg sdfg dfsg sdfgsd dfg
         sdfgsdds sdfg fdsg ds dsfg sdfgdfgh dsfg sdfg sdfgsd fg sdfg dsgf sdgf
@@ -60,24 +66,24 @@
         sdfgdfgh dsfg sdfg sdfgsd fg sdfg dsgf sdgf dfg sfdg sdfg dsgf sdfg
         sfdgsd fg sdfg dsfg sdgf gfdsh hgfd gfdh fdgh gfdh gfh fdghgfdhdgfh
         gfdh gfh fgdh fdgh fdghgfdh
-      </div>
+      </div> -->
 
       <!-- Title parent with date and tags and button-->
-      <div id="template-info" class="noteMenu">
+      <!-- <div id="template-info" class="noteMenu"> -->
         <!-- Title note-->
-        <div id="template-title">Title note</div>
+        <!-- <div id="template-title">Title note</div> -->
         <!-- Date-->
-        <div id="template-date">Date 1221412</div>
+        <!-- <div id="template-date">Date 1221412</div> -->
         <!-- Tags-->
-        <div id="template-tag">First tag</div>
+        <!-- <div id="template-tag">First tag</div> -->
         <!-- this button adds answer commentfield under main note-->
-        <button>answer</button>
-      </div>
+        <!-- <button>answer</button>
+      </div> -->
 
       <!-- answer Comment Parent-->
-      <div id="template-answer-parent" class="answerParent">
+      <!-- <div id="template-answer-parent" class="answerParent"> -->
         <!-- answer comment childs. When pushed button Add one these. Will be changed to textfield max chars.-->
-        <div>
+        <!-- <div>
           answe cosdammernasdf dfsa dsafsadf fd s fd sdaf sdfsd sfda fd
           sdafasfd sa fas
         </div>
@@ -90,18 +96,18 @@
           sdafasfd sa fas
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Template note stops here-->
 
     <!-- Individual Note parent THIS IS MAIN ADD from "Add note button"-->
-    <div id="draft-individual-note" class="individualNote">
+    <!-- <div id="draft-individual-note" class="individualNote"> -->
       <!-- Likes etc-->
-      <aside>
+      <!-- <aside>
         <button class="voteButton">Vote Good</button>
-      </aside>
+      </aside> -->
 
       <!-- Note child-->
-      <div>
+      <!-- <div>
         blalblala dsfgsd sdg dsfgs sy df ags dsfg sdfg dfsg sdfgsd dfg
         sdfgsdds sdfg fdsg ds dsfg sdfgdfgh dsfg sdfg sdfgsd fg sdfg dsgf sdgf
         dfg sfdg sdfg dsgf sdfg sfdgsd fg sdfg dsfg sdgf gfdsh hgfd gfdh fdgh
@@ -110,24 +116,24 @@
         sdfgdfgh dsfg sdfg sdfgsd fg sdfg dsgf sdgf dfg sfdg sdfg dsgf sdfg
         sfdgsd fg sdfg dsfg sdgf gfdsh hgfd gfdh fdgh gfdh gfh fdghgfdhdgfh
         gfdh gfh fgdh fdgh fdghgfdh
-      </div>
+      </div> -->
 
       <!-- Title parent with date and tags and button-->
-      <div class="noteMenu">
+      <!-- <div class="noteMenu"> -->
         <!-- Title note-->
-        <div>Title note</div>
+        <!-- <div>Title note</div> -->
         <!-- Date-->
-        <div>Date 1221412</div>
+        <!-- <div>Date 1221412</div> -->
         <!-- Tags-->
-        <div>First tag</div>
+        <!-- <div>First tag</div> -->
         <!-- this button adds answer commentfield under main note-->
-        <button>test</button>
-      </div>
+        <!-- <button>test</button>
+      </div> -->
 
       <!-- answer Comment Parent-->
-      <div class="answerParent">
+      <!-- <div class="answerParent"> -->
         <!-- answer comment childs. When pushed button Add one here-->
-        <div>
+        <!-- <div>
           answe cosdammernasdf dfsa dsafsadf fd s fd sdaf sdfsd sfda fd
           sdafasfd sa fas
         </div>
@@ -136,7 +142,7 @@
           sdafasfd sa fas
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Invididual Note parent stops here-->
   </div>
