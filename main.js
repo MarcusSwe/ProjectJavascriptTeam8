@@ -70,7 +70,6 @@ function getInputFromForm() {
     ];
     allNotesArray.push(userNote);
     console.log(allNotesArray);
-
     var note1 = new MakeNewNote(
       userInputTitle,
       userInputTag1,
@@ -121,7 +120,6 @@ function Note(title, tags, subject, date) {
   this.subject = subject;
   this.date = date;
   var number = allNotesArray.length;
-
   //new element: main div
   var newMainDiv = document.createElement("DIV");
   newMainDiv.setAttribute("class", "idividualNote");
