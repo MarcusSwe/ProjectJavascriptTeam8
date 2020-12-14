@@ -1,44 +1,50 @@
-//"use strict";
-document
-  .getElementById("new-note")
-  .addEventListener("click", newNoteWindowOpen);
+"use strict";
+// Make newnote button and add properties.
+var newNoteButton = document.getElementById("new-note");
+newNoteButton.addEventListener("click", newNoteWindowOpen);
 document
   .getElementById("constr-close")
   .addEventListener("click", newNoteWindowClose);
+var logoutButton = document.getElementById("logout-button");
+logoutButton.addEventListener("click", function () {
+  logout();
+});
+//arrays to save all notes
+var allNotesArray = [];
 newNoteWindowClose();
 
-//arrays to save all note
-var allNotesArray = [];
+logout();
 
+// Note Window open
 function newNoteWindowOpen() {
   document.getElementById("constr-new-note").style.visibility = "visible";
 }
-
+// Note Window close
 function newNoteWindowClose() {
   document.getElementById("constr-new-note").style.visibility = "hidden";
 }
-var submitButton = document.getElementById("constr-submit");
-submitButton.addEventListener("click", function () {
-  getInputFromForm();
-});
 
 /*gets information on note when user hits submit button. Sets al information to a new 
 object "userNote" and pushes that to the AllUserNotes Array and sends note data to
 MakeNewNote constructor*/
+var submitButton = document.getElementById("constr-submit");
+submitButton.addEventListener("click", function () {
+  getInputFromForm();
+});
 function getInputFromForm() {
   var userInputTitle = document.getElementById("constr-title").value;
-  console.log(userInputTitle);
+  //console.log(userInputTitle);
 
   //get tags if it is select
-  var htmlTags = document.querySelectorAll('[js-tag]');
+  var htmlTags = document.querySelectorAll("[js-tag]");
   var userInputTags = [];
   htmlTags.forEach((item) => {
     var check = item.checked;
     if (check == true) {
       userInputTags.push(item.value);
     }
-  })
-  console.log(userInputTags);
+  });
+  //console.log(userInputTags);
 
   /*   var userInputTag1 = document.getElementById("constr-tag1").checked;
     console.log(userInputTag1);
@@ -48,11 +54,11 @@ function getInputFromForm() {
     console.log(userInputTag3); */
 
   var userInputSubject = document.getElementById("constr-subject").value;
-  console.log(userInputSubject);
+  //console.log(userInputSubject);
 
   //var userInputDate = new Date().toDateString();
   var userInputDate = new Date();
-  console.log(userInputDate);
+  //console.log(userInputDate);
 
   /*   var userNote = [
       userInputTitle,
@@ -79,10 +85,11 @@ function getInputFromForm() {
     userInputTitle,
     userInputTags,
     userInputSubject,
-    userInputDate);
+    userInputDate
+  );
 
   allNotesArray.push(newNote);
-  console.log(allNotesArray);
+  console.log("allNotesArray: " + allNotesArray);
 
   createNoteDiv(newNote);
 
@@ -222,7 +229,6 @@ function Note(title, tags, subject, date) {
   }
     */
 
-
 function createNoteDiv(note) {
   var title = note.title;
   var tags = note.tags;
@@ -230,7 +236,7 @@ function createNoteDiv(note) {
   var date = note.date;
   var number = note.number;
 
-  //creat String to show
+  //create String to show
   var tagString = "";
   tags.forEach((item) => {
     tagString += item + " ";
@@ -243,36 +249,212 @@ function createNoteDiv(note) {
   newMainDiv.setAttribute("class", "idividualNote");
   newMainDiv.setAttribute("id", "new-main-div" + number);
   document.getElementById("main-parent").appendChild(newMainDiv);
-  
+
   // new element: note info (contains "number", "title", "tags". "date" and "answer button")
   newMainDiv.innerHTML =
-    "<div id='new-subject-div+number+" + number + "'>" + subject + "</div>" +
-    "<div class='noteInfo' id='new-note-info-div" + number + "'>" +
-    "<div class='noteNumber' id='new-number-div" + number + "'>" + number + "</div>" +
-    "<div id='new-title-div" + number + "'>" + title + "</div>" +
-    "<div id='new-date-div" + number + "'>" + dateString + "</div>" +
-    "<div id='new-tags-div" + number + "'>" + tagString + "</div>" +
+    "<div id='new-subject-div+number+" +
+    number +
+    "'>" +
+    subject +
     "</div>" +
-    "<div id='new-reply-parent-div" + number + "' class='replyParent'>" +
-    "<div id='new-reply-child-div" + number + "' class='replyChild'>" +
-    "<button id='new-title-reply-button" + number + "' class='replyButton'>Reply</button>" +
-    "<textarea id='new-title-reply-textarea" + number + "' placeholder='Write your reply here and press 'Reply'' class='replyTextarea'>"+
-    "</textarea></div></div>"
+    "<div class='noteInfo' id='new-note-info-div" +
+    number +
+    "'>" +
+    "<div class='noteNumber' id='new-number-div" +
+    number +
+    "'>" +
+    number +
+    "</div>" +
+    "<div id='new-title-div" +
+    number +
+    "'>" +
+    title +
+    "</div>" +
+    "<div id='new-date-div" +
+    number +
+    "'>" +
+    dateString +
+    "</div>" +
+    "<div id='new-tags-div" +
+    number +
+    "'>" +
+    tagString +
+    "</div>" +
+    "</div>" +
+    "<div id='new-reply-parent-div" +
+    number +
+    "' class='replyParent'>" +
+    "<div id='new-reply-child-div" +
+    number +
+    "' class='replyChild'>" +
+    "<button id='new-title-reply-button" +
+    number +
+    "' class=replyButton>Reply</button>" +
+    "<textarea id='new-title-reply-textarea" +
+    number +
+    "' placeholder='Write your reply here and press 'Reply'' class='replyTextarea'>" +
+    "</textarea></div></div>";
 
   // setting eventlistener to reply button. Adds data from textfield to new div in reply parent div
   document
     .getElementById("new-title-reply-button" + number)
     .addEventListener("click", function () {
       var newReply = document.createElement("DIV");
-      var userReplyText = document.getElementById("new-title-reply-textarea" + number)
-        .value;
-      newReply.innerHTML = userReplyText;
-      document
-        .getElementById("new-reply-parent-div" + number)
-        .appendChild(newReply);
-      newReply.setAttribute("id", "reply-div" + number);
-      newReply.setAttribute("class", "reply");
-      document.getElementById("new-title-reply-textarea" + number).value = "";
-      note.replies.push(userReplyText);
+      var userReplyText = document.getElementById(
+        "new-title-reply-textarea" + number
+      ).value;
+      if (userReplyText == "") {
+      } else {
+        newReply.innerHTML = userReplyText;
+        document
+          .getElementById("new-reply-parent-div" + number)
+          .appendChild(newReply);
+        newReply.setAttribute("id", "reply-div" + number);
+        newReply.setAttribute("class", "reply");
+        document.getElementById("new-title-reply-textarea" + number).value = "";
+        note.replies.push(userReplyText);
+      }
     });
+}
+
+/*******************  user login/account below *******************/
+
+// this array stores all users
+var userArray = [];
+userArray.push({ username: "Emil", password: "123" });
+userArray.push({ username: "Changzhou", password: "456" });
+userArray.push({ username: "Marcus", password: "789" });
+// this div contains Login or Account forms
+var accountDiv = document.getElementById("login-div");
+
+// opens or closes accountDiv
+accountDiv.innerHTML = ""; // sets initial value of login div to ""
+document.getElementById("user-account").addEventListener("click", function () {
+  if (accountDiv.innerHTML == "") {
+    loginShow();
+  } else {
+    accountClose();
+  }
+});
+
+//logout function
+function logout() {
+  newNoteButton.style.visibility = "hidden";
+  logoutButton.style.visibility = "hidden";
+  document.getElementById("login-state").innerHTML = "Not logged in";
+  console.log(document.getElementsByClassName("replyChild"));
+  if (allNotesArray.length > 0) {
+    var i;
+    for (i = 1; i <= allNotesArray.length; i++) {
+      document.getElementById("new-reply-child-div"+i).style.visibility = "hidden";
+    };
+  }
+  newNoteWindowClose();
+}
+//login function
+function login() {
+  newNoteButton.style.visibility = "visible";
+  logoutButton.style.visibility = "visible";
+  if (allNotesArray.length > 0) {
+    var i;
+    for (i = 1; i <= allNotesArray.length; i++) {
+      document.getElementById("new-reply-child-div"+i).style.visibility = "visible";
+    };
+  }
+}
+// constructs user from username+password and sends user to userArray
+function AddUser(name, password) {
+  this.username = name;
+  this.password = password;
+  var newUser = { username: name, password: password };
+  console.log("username; " + name);
+  console.log("password; " + password);
+  if (name == "") {
+    alert(
+      "Username and/or password has no data. Enter new name and password to create account"
+    );
+  } else {
+    userArray.push(newUser);
+    alert("Welcome " + name + ". Go to login to use your new acount.");
+  }
+}
+// shows Login form in accountDiv
+function loginShow() {
+  accountDiv.innerHTML =
+    "<button id=user-login-button>Login</button>" +
+    "<button id=new-user-button>New Account</button>" +
+    "<h4>Login</h4>" +
+    "<p>Input username and and password to login.</p>" +
+    "<form id=login-form>" +
+    "<label for=login-usenamer>Username</label>" +
+    "<input id=login-username type=text name=login-username placeholder=Input username>" +
+    "<label for=login-password>Password</label>" +
+    "<input id=login-password type=password name=login-password placeholder=Input password>" +
+    "<input type=button id=user-login name=login-user value=Submit>" +
+    "</form>";
+  document
+    .getElementById("user-login-button")
+    .addEventListener("click", loginShow);
+  document
+    .getElementById("new-user-button")
+    .addEventListener("click", newUserShow);
+  var newLoginButton = document.getElementById("user-login");
+  var loginUsername = document.getElementById("login-username");
+  var loginPassword = document.getElementById("login-password");
+  newLoginButton.addEventListener("click", function () {
+    new ValidateLogin(loginUsername.value, loginPassword.value);
+  });
+}
+// Validates username / password. Sens you eiter in to app or displays login failed
+function ValidateLogin(name, pass) {
+  this.name = name;
+  this.pass = pass;
+  var i;
+  var correct;
+  for (i = 0; i < userArray.length; i++) {
+    if (name == userArray[i].username) {
+      correct = true;
+    }
+  }
+  if (correct) {
+    document.getElementById("login-form").reset();
+    document.getElementById("login-state").innerHTML =
+      "You are logged in as " + name;
+    login();
+    accountClose();
+  } else {
+    document.getElementById("login-state").innerHTML =
+      "Login failed. Try again.";
+  }
+}
+// closes accountDiv
+function accountClose() {
+  accountDiv.innerHTML = "";
+}
+//shows new account in accountDiv and gets Data from user input
+function newUserShow() {
+  accountDiv.innerHTML =
+    "<button id=user-login-button>Login</button>" +
+    "<button id=new-user-button>New Account</button>" +
+    "<h4>New Account</h4>" +
+    "<p>Input new username and and password to create new user account.</p>" +
+    "<form id=new-user-form>" +
+    "<label for= new-username>Username</label>" +
+    "<input id=new-username type=text name=new-username placeholder='Input new username'>" +
+    "<label for=new-password>Password</label>" +
+    "<input id=new-password type=text name=new-password placeholder='Input wanted password'>" +
+    "<input type=button id=new-user name=submit-user value=Create>" +
+    "</form>";
+  document
+    .getElementById("user-login-button")
+    .addEventListener("click", loginShow);
+  document
+    .getElementById("new-user-button")
+    .addEventListener("click", newUserShow);
+  var newUserButton = document.getElementById("new-user");
+  var userUsername = document.getElementById("new-username");
+  var userPassword = document.getElementById("new-password");
+  newUserButton.addEventListener("click", function () {
+    new AddUser(userUsername.value, userPassword.value);
+  });
 }
