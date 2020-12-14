@@ -456,5 +456,6 @@ function newUserShow() {
   var userPassword = document.getElementById("new-password");
   newUserButton.addEventListener("click", function () {
     new AddUser(userUsername.value, userPassword.value);
+    document.getElementById("new-user-form").reset();
   });
 }
