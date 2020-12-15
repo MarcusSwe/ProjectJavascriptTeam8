@@ -1,4 +1,19 @@
 "use strict";
+//hide and show functions
+function hide(...elements) {
+  elements.forEach((el) => {
+    el.classList.remove("visible");
+    el.classList.add("hidden");
+  })
+}
+
+function show(...elements) {
+  elements.forEach((el) => {
+    el.classList.remove("hidden");
+    el.classList.add("visible");
+  })
+}
+
 // Make newnote button and add properties.
 var newNoteButton = document.getElementById("new-note");
 newNoteButton.addEventListener("click", newNoteWindowOpen);
@@ -17,11 +32,11 @@ logout();
 
 // Note Window open
 function newNoteWindowOpen() {
-  document.getElementById("constr-new-note").style.visibility = "visible";
+  show(document.getElementById("constr-new-note"));
 }
 // Note Window close
 function newNoteWindowClose() {
-  document.getElementById("constr-new-note").style.visibility = "hidden";
+  hide(document.getElementById("constr-new-note"));
 }
 
 /*gets information on note when user hits submit button. Sets al information to a new 
@@ -45,41 +60,10 @@ function getInputFromForm() {
       userInputTags.push(item.value);
     }
   });
-  //console.log(userInputTags);
-
-  /*   var userInputTag1 = document.getElementById("constr-tag1").checked;
-    console.log(userInputTag1);
-    var userInputTag2 = document.getElementById("constr-tag2").checked;
-    console.log(userInputTag2);
-    var userInputTag3 = document.getElementById("constr-tag3").checked;
-    console.log(userInputTag3); */
 
   var userInputSubject = document.getElementById("constr-subject").value;
-  //console.log(userInputSubject);
 
-  //var userInputDate = new Date().toDateString();
   var userInputDate = new Date();
-  //console.log(userInputDate);
-
-  /*   var userNote = [
-      userInputTitle,
-      userInputTag1,
-      userInputTag2,
-      userInputTag3,
-      userInputSubject,
-      userInputDate,
-    ];
-    allNotesArray.push(userNote);
-    console.log(allNotesArray);
-
-    var note1 = new MakeNewNote(
-      userInputTitle,
-      userInputTag1,
-      userInputTag2,
-      userInputTag3,
-      userInputSubject,
-      userInputDate
-    ); */
 
   // create new note class
   var newNote = new Note(
@@ -90,7 +74,7 @@ function getInputFromForm() {
   );
 
   allNotesArray.push(newNote);
-  console.log("allNotesArray: " + allNotesArray);
+  console.log(allNotesArray);
 
   createNoteDiv(newNote);
 
@@ -114,122 +98,7 @@ function Note(title, tags, subject, date) {
   this.voteNumber = 0;
 }
 
-/* 
-  function MakeNewNote(title, tag1, tag2, tag3, subject, date) {
-  this.title = title;
-  this.tag1 = tag1;
-  this.tag2 = tag2;
-  this.tag3 = tag3;
-  this.subject = subject;
-  this.date = date;
-  var number = allNotesArray.length;
-
-  //new element: main div
-  var newMainDiv = document.createElement("DIV");
-  newMainDiv.setAttribute("class", "idividualNote");
-  newMainDiv.setAttribute("id", "new-main-div" + number);
-  document.getElementById("main-parent").appendChild(newMainDiv);
-  // new element: subject div
-  var newSubjectDiv = document.createElement("DIV");
-  newSubjectDiv.setAttribute("id", "new-subject-div" + number);
-  newSubjectDiv.innerHTML = subject;
-  document.getElementById("new-main-div" + number).appendChild(newSubjectDiv);
-  // new element: note info (contains "number", "title", "tags". "date" and "answer button")
-  var newNoteInfoDiv = document.createElement("DIV");
-  newNoteInfoDiv.setAttribute("class", "noteInfo");
-  newNoteInfoDiv.setAttribute("id", "new-note-info-div" + number);
-  document.getElementById("new-main-div" + number).appendChild(newNoteInfoDiv);
-  // new element: number inside newNoteInfoDov
-  var NewNoteNumber = document.createElement("DIV");
-  NewNoteNumber.innerHTML = number;
-  NewNoteNumber.setAttribute("class", "noteNumber");
-  NewNoteNumber.setAttribute("id", "new-number-div" + number);
-  document
-    .getElementById("new-note-info-div" + number)
-    .appendChild(NewNoteNumber);
-  // new element: title inside newNoteInfoDiv
-  var newTitleDiv = document.createElement("DIV");
-  newTitleDiv.innerHTML = title;
-  newTitleDiv.setAttribute("id", "new-title-div" + number);
-  document
-    .getElementById("new-note-info-div" + number)
-    .appendChild(newTitleDiv);
-  // new element: Date inside newNoteInfoDiv
-  var newTitleDate = document.createElement("DIV");
-  newTitleDate.innerHTML = date;
-  newTitleDate.setAttribute("id", "new-date-div" + number);
-  document
-    .getElementById("new-note-info-div" + number)
-    .appendChild(newTitleDate);
-  // new element: tags inside newNoteInfoDiv
-  var newtitleTags = document.createElement("DIV");
-  newtitleTags.setAttribute("id", "new-tags-div" + number);
-  document
-    .getElementById("new-note-info-div" + number)
-    .appendChild(newtitleTags);
-  if (tag1 == true) {
-    newtitleTags.appendChild(document.createTextNode("Fun "));
-  }
-  if (tag2 == true) {
-    newtitleTags.appendChild(document.createTextNode("Serious "));
-  }
-  if (tag3 == true) {
-    newtitleTags.appendChild(document.createTextNode("URGENT! "));
-  }
-  // new element: reply parent div
-  var newReplyParentDiv = document.createElement("DIV");
-  document
-    .getElementById("new-main-div" + number)
-    .appendChild(newReplyParentDiv);
-  newReplyParentDiv.setAttribute("id", "new-reply-parent-div" + number);
-  newReplyParentDiv.setAttribute("class", "replyParent");
-  // new element: reply child div
-  var newReplyChildDiv = document.createElement("DIV");
-  document
-    .getElementById("new-reply-parent-div" + number)
-    .appendChild(newReplyChildDiv);
-  newReplyChildDiv.setAttribute("id", "new-reply-child-div" + number);
-  newReplyChildDiv.setAttribute("class", "replyChild");
-  // new element: Reply Button inside reply form
-  var newTitleReplyButton = document.createElement("BUTTON");
-  var newTitleReplyButtonName = document.createTextNode("Reply");
-  newTitleReplyButton.appendChild(newTitleReplyButtonName);
-  newTitleReplyButton.setAttribute("id", "new-title-reply-button" + number);
-  newTitleReplyButton.setAttribute("class", "replyButton");
-  document
-    .getElementById("new-reply-child-div" + number)
-    .appendChild(newTitleReplyButton);
-  // new element: Reply TEXTAREA inside reply form
-  var newTitleReplyTextarea = document.createElement("TEXTAREA");
-  newTitleReplyTextarea.setAttribute(
-    "id",
-    "new-title-reply-textarea" + number
-  );
-  newTitleReplyTextarea.setAttribute(
-    "placeholder",
-    "Write your reply here and press 'Reply'"
-  );
-  newTitleReplyTextarea.setAttribute("class", "replyTextarea");
-  document
-    .getElementById("new-reply-child-div" + number)
-    .appendChild(newTitleReplyTextarea); 
-    // setting eventlistener to reply button. Adds data from textfield to new div in reply parent div
-  document
-    .getElementById("new-title-reply-button" + number)
-    .addEventListener("click", function () {
-      var newReply = document.createElement("DIV");
-      var userReplyText = document.getElementById("new-title-reply-textarea" + number)
-        .value;
-      newReply.innerHTML = userReplyText;
-      document
-        .getElementById("new-reply-parent-div" + number)
-        .appendChild(newReply);
-      newReply.setAttribute("id", "reply-div" + number);
-      newReply.setAttribute("class", "reply");
-      document.getElementById("new-title-reply-textarea" + number).value = "";
-    });
-  }
-    */
+//Create new note here
 
 function createNoteDiv(note) {
   var title = note.title;
@@ -239,7 +108,7 @@ function createNoteDiv(note) {
   var number = note.number;
 
 
-  //create String to show
+  //create data-String to show
   var tagString = "";
   tags.forEach((item) => {
     tagString += item + " ";
@@ -247,56 +116,95 @@ function createNoteDiv(note) {
 
   var dateString = date.toLocaleDateString() + " " + date.toLocaleTimeString();
 
-  //new element: main div
+  //new element: main div wrapper
   var newMainDiv = document.createElement("DIV");
   newMainDiv.setAttribute("class", "idividualNote");
-  newMainDiv.setAttribute("id", "new-main-div" + number);
-  document.getElementById("main-parent").appendChild(newMainDiv);
+  newMainDiv.setAttribute("id", "new-main-div" + number); 
+  document.getElementById("main-parent").appendChild(newMainDiv);  
+  // new element changed innerhtml to createElement for security 
+  
+            //first element inside note: subject
+            var xSubject = document.createElement("div");
+            xSubject.setAttribute("id","new-subject-div" + number);
+            xSubject.textContent = subject;
+            document.getElementById("new-main-div" + number).appendChild(xSubject);
 
-  // new element: note info (contains "number", "title", "tags". "date" and "answer button")
-  newMainDiv.innerHTML =
-    "<div id='new-subject-div+number+" +
-    number +
-    "'>" +
-    subject +
-    "</div>" +
-    "<div class='noteInfo' id='new-note-info-div" +
-    number +
-    "'>" +
-    "<div class='noteNumber' id='new-number-div" +
-    number +
-    "'>" +
-    number +
-    "</div>" +
-    "<div id='new-title-div" +
-    number +
-    "'>" +
-    title +
-    "</div>" +
-    "<div id='new-date-div" +
-    number +
-    "'>" +
-    dateString +
-    "</div>" +
-    "<div id='new-tags-div" +
-    number +
-    "'>" +
-    tagString +
-    "</div>" +
-    "</div>" +
-    "<div id='new-reply-parent-div" +
-    number +
-    "' class='replyParent'><button vote-b-" + number + ">vote</button><p vote-n-" + number + "></p>" +
-    "<div id='new-reply-child-div" +
-    number +
-    "' class='replyChild'>" +
-    "<button id='new-title-reply-button" +
-    number +
-    "' class=replyButton>Reply</button>" +
-    "<textarea id='new-title-reply-textarea" +
-    number +
-    "' placeholder='Write your reply here and press 'Reply'' class='replyTextarea'>" +
-    "</textarea></div></div>";
+            //second element inside note: noteinfo wrapper div
+            var xNoteinfo = document.createElement("div");
+            xNoteinfo.setAttribute("id","new-note-info-div" + number);
+            xNoteinfo.setAttribute("class","noteInfo");
+            document.getElementById("new-main-div" + number).appendChild(xNoteinfo);
+       
+                      //NUMBER element inside noteinfo wrapper div
+                      var xNumber = document.createElement("div");
+                      xNumber.setAttribute("id","new-number-div" + number);
+                      xNumber.setAttribute("class","noteNumber");
+                      xNumber.textContent = number;
+                      document.getElementById("new-note-info-div" + number).appendChild(xNumber);
+          
+                      //TITLE element inside noteinfo wrapper div
+                      var xTitle = document.createElement("div");
+                      xTitle.setAttribute("id","new-title-div" + number);
+                      xTitle.textContent = title;
+                      document.getElementById("new-note-info-div" + number).appendChild(xTitle);
+          
+                      //DATE element inside noteinfo wrapper div
+                      var xDate = document.createElement("div");
+                      xDate.setAttribute("id","new-date-div" + number);
+                      xDate.textContent = dateString;
+                      document.getElementById("new-note-info-div" + number).appendChild(xDate);
+          
+                      //TAG element inside noteinfo wrapper div
+                      var xTag = document.createElement("div");
+                      xTag.setAttribute("id","new-tags-div" + number);
+                      xTag.textContent = tagString;
+                      document.getElementById("new-note-info-div" + number).appendChild(xTag);
+
+            //third element inside note: replay wrapper div
+            var xReplyParent = document.createElement("div");
+            xReplyParent.setAttribute("id","new-reply-parent-div" + number);
+            xReplyParent.setAttribute("class", "replyParent");
+            document.getElementById("new-main-div" + number).appendChild(xReplyParent);
+
+                       // new vote div
+                       var newVoteDiv = document.createElement("DIV");
+                       newVoteDiv.setAttribute("id", "new-vote-div" + number);
+                       newVoteDiv.setAttribute("class", "voteDiv");
+                       document.getElementById("new-reply-parent-div" + number).appendChild(newVoteDiv);
+
+                                //vote button
+                                 var newVoteButton = document.createElement("BUTTON");
+                                 newVoteButton.innerHTML="Vote";
+                                 newVoteButton.setAttribute("id", "vote-b-" + number);
+                                 newVoteButton.setAttribute("class", "voteButton");
+                                 document.getElementById("new-vote-div" + number).appendChild(newVoteButton);
+                                //vote number
+                                 var newVotetext = document.createElement("p");
+                                 newVotetext.innerHTML=note.voteNumber;
+                                 newVotetext.setAttribute("id", "vote-n-" + number);
+                                 newVotetext.setAttribute("class", "voteButton");
+                                 document.getElementById("new-vote-div" + number).appendChild(newVotetext);
+                       
+
+                       //Replay child element wrapper
+                       var xReplyChild = document.createElement("div");
+                       xReplyChild.setAttribute("id","new-reply-child-div" + number);
+                       xReplyChild.setAttribute("class", "replyChild");
+                       document.getElementById("new-reply-parent-div" + number).appendChild(xReplyChild);
+
+                               //Reply button element
+                               var xReplyButton = document.createElement("button");
+                               xReplyButton.setAttribute("id","new-title-reply-button" + number);
+                               xReplyButton.setAttribute("class","replyButton");
+                               xReplyButton.innerText = "Reply";
+                               document.getElementById("new-reply-child-div" + number).appendChild(xReplyButton);
+
+                               //Reply textarea element
+                               var xReplyTextarea = document.createElement("textarea");
+                               xReplyTextarea.setAttribute("id","new-title-reply-textarea" + number);
+                               xReplyTextarea.setAttribute("class","replyTextarea");
+                               xReplyTextarea.setAttribute("placeholder", "Reply");
+                               document.getElementById("new-reply-child-div" + number).appendChild(xReplyTextarea);
 
   // setting eventlistener to reply button. Adds data from textfield to new div in reply parent div
   document
@@ -318,10 +226,10 @@ function createNoteDiv(note) {
       }
     });
 
-  document.querySelector("[vote-b-" + number + "]").addEventListener("click", () => {
+  //vote function
+  document.getElementById("vote-b-" + number).addEventListener("click", () => {
     note.voteNumber++;
-    document.querySelector("[vote-n-" + number + "]").innerHTML = note.voteNumber;
-    console.log(allNotesArray)
+    document.getElementById("vote-n-" + number).innerHTML = note.voteNumber;
   });
 }
 
@@ -329,18 +237,9 @@ function createNoteDiv(note) {
 
 // this array stores all users
 var userArray = [];
-userArray.push({
-  username: "Emil",
-  password: "123"
-});
-userArray.push({
-  username: "Changzhou",
-  password: "456"
-});
-userArray.push({
-  username: "Marcus",
-  password: "789"
-});
+userArray.push({ username: "Emil", password: "123" });
+userArray.push({ username: "Changzhou", password: "456" });
+userArray.push({ username: "Marcus", password: "789" });
 // this div contains Login or Account forms
 var accountDiv = document.getElementById("login-div");
 
@@ -363,7 +262,7 @@ function logout() {
   if (allNotesArray.length > 0) {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
-      document.getElementById("new-reply-child-div" + i).style.visibility = "hidden";
+      document.getElementById("new-reply-child-div"+i).style.visibility = "hidden";
     };
   }
   newNoteWindowClose();
@@ -375,7 +274,7 @@ function login() {
   if (allNotesArray.length > 0) {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
-      document.getElementById("new-reply-child-div" + i).style.visibility = "visible";
+      document.getElementById("new-reply-child-div"+i).style.visibility = "visible";
     };
   }
 }
@@ -383,10 +282,7 @@ function login() {
 function AddUser(name, password) {
   this.username = name;
   this.password = password;
-  var newUser = {
-    username: name,
-    password: password
-  };
+  var newUser = { username: name, password: password };
   console.log("username; " + name);
   console.log("password; " + password);
   if (name == "") {
