@@ -31,6 +31,7 @@ var submitButton = document.getElementById("constr-submit");
 submitButton.addEventListener("click", function () {
   getInputFromForm();
 });
+
 function getInputFromForm() {
   var userInputTitle = document.getElementById("constr-title").value;
   //console.log(userInputTitle);
@@ -70,6 +71,7 @@ function getInputFromForm() {
     ];
     allNotesArray.push(userNote);
     console.log(allNotesArray);
+
     var note1 = new MakeNewNote(
       userInputTitle,
       userInputTag1,
@@ -109,6 +111,7 @@ function Note(title, tags, subject, date) {
 
   this.replies = [];
   this.number = startId++;
+  this.voteNumber = 0;
 }
 
 /* 
@@ -120,6 +123,7 @@ function Note(title, tags, subject, date) {
   this.subject = subject;
   this.date = date;
   var number = allNotesArray.length;
+
   //new element: main div
   var newMainDiv = document.createElement("DIV");
   newMainDiv.setAttribute("class", "idividualNote");
@@ -234,6 +238,7 @@ function createNoteDiv(note) {
   var date = note.date;
   var number = note.number;
 
+
   //create String to show
   var tagString = "";
   tags.forEach((item) => {
@@ -242,94 +247,66 @@ function createNoteDiv(note) {
 
   var dateString = date.toLocaleDateString() + " " + date.toLocaleTimeString();
 
-  //new element: main div wrapper
+  //new element: main div
   var newMainDiv = document.createElement("DIV");
   newMainDiv.setAttribute("class", "idividualNote");
-  newMainDiv.setAttribute("id", "new-main-div" + number); 
-  document.getElementById("main-parent").appendChild(newMainDiv);  
-  // new element changed innerhtml to createElement for security 
-  
-            //first element inside note: subject
-            var xSubject = document.createElement("div");
-            xSubject.setAttribute("id","new-subject-div" + number);
-            xSubject.textContent = subject;
-            document.getElementById("new-main-div" + number).appendChild(xSubject);
+  newMainDiv.setAttribute("id", "new-main-div" + number);
+  document.getElementById("main-parent").appendChild(newMainDiv);
 
-            //second element inside note: noteinfo wrapper div
-            var xNoteinfo = document.createElement("div");
-            xNoteinfo.setAttribute("id","new-note-info-div" + number);
-            xNoteinfo.setAttribute("class","noteInfo");
-            document.getElementById("new-main-div" + number).appendChild(xNoteinfo);
-       
-                      //NUMBER element inside noteinfo wrapper div
-                      var xNumber = document.createElement("div");
-                      xNumber.setAttribute("id","new-number-div" + number);
-                      xNumber.setAttribute("class","noteNumber");
-                      xNumber.textContent = number;
-                      document.getElementById("new-note-info-div" + number).appendChild(xNumber);
-          
-                      //TITLE element inside noteinfo wrapper div
-                      var xTitle = document.createElement("div");
-                      xTitle.setAttribute("id","new-title-div" + number);
-                      xTitle.textContent = title;
-                      document.getElementById("new-note-info-div" + number).appendChild(xTitle);
-          
-                      //DATE element inside noteinfo wrapper div
-                      var xDate = document.createElement("div");
-                      xDate.setAttribute("id","new-date-div" + number);
-                      xDate.textContent = dateString;
-                      document.getElementById("new-note-info-div" + number).appendChild(xDate);
-          
-                      //TAG element inside noteinfo wrapper div
-                      var xTag = document.createElement("div");
-                      xTag.setAttribute("id","new-tags-div" + number);
-                      xTag.textContent = tagString;
-                      document.getElementById("new-note-info-div" + number).appendChild(xTag);
-
-            //third element inside note: replay wrapper div
-            var xReplyParent = document.createElement("div");
-            xReplyParent.setAttribute("id","new-reply-parent-div" + number);
-            xReplyParent.setAttribute("class", "replyParent");
-            document.getElementById("new-main-div" + number).appendChild(xReplyParent);
-
-                       //Replay child element wrapper
-                       var xReplyChild = document.createElement("div");
-                       xReplyChild.setAttribute("id","new-reply-child-div" + number);
-                       xReplyChild.setAttribute("class", "replyChild");
-                       document.getElementById("new-reply-parent-div" + number).appendChild(xReplyChild);
-
-                               //Reply button element
-                               var xReplyButton = document.createElement("button");
-                               xReplyButton.setAttribute("id","new-title-reply-button" + number);
-                               xReplyButton.setAttribute("class","replyButton");
-                               xReplyButton.innerText = "Reply";
-                               document.getElementById("new-reply-child-div" + number).appendChild(xReplyButton);
-
-                               //Reply textarea element
-                               var xReplyTextarea = document.createElement("textarea");
-                               xReplyTextarea.setAttribute("id","new-title-reply-textarea" + number);
-                               xReplyTextarea.setAttribute("class","replyTextarea");
-                               xReplyTextarea.setAttribute("placeholder", "Reply");
-                               document.getElementById("new-reply-child-div" + number).appendChild(xReplyTextarea);
-   
-
-
-
-  
+  // new element: note info (contains "number", "title", "tags". "date" and "answer button")
+  newMainDiv.innerHTML =
+    "<div id='new-subject-div+number+" +
+    number +
+    "'>" +
+    subject +
+    "</div>" +
+    "<div class='noteInfo' id='new-note-info-div" +
+    number +
+    "'>" +
+    "<div class='noteNumber' id='new-number-div" +
+    number +
+    "'>" +
+    number +
+    "</div>" +
+    "<div id='new-title-div" +
+    number +
+    "'>" +
+    title +
+    "</div>" +
+    "<div id='new-date-div" +
+    number +
+    "'>" +
+    dateString +
+    "</div>" +
+    "<div id='new-tags-div" +
+    number +
+    "'>" +
+    tagString +
+    "</div>" +
+    "</div>" +
+    "<div id='new-reply-parent-div" +
+    number +
+    "' class='replyParent'><button vote-b-" + number + ">vote</button><p vote-n-" + number + "></p>" +
+    "<div id='new-reply-child-div" +
+    number +
+    "' class='replyChild'>" +
+    "<button id='new-title-reply-button" +
+    number +
+    "' class=replyButton>Reply</button>" +
+    "<textarea id='new-title-reply-textarea" +
+    number +
+    "' placeholder='Write your reply here and press 'Reply'' class='replyTextarea'>" +
+    "</textarea></div></div>";
 
   // setting eventlistener to reply button. Adds data from textfield to new div in reply parent div
-  
- 
   document
     .getElementById("new-title-reply-button" + number)
     .addEventListener("click", function () {
       var newReply = document.createElement("DIV");
-
       var userReplyText = document.getElementById(
         "new-title-reply-textarea" + number
       ).value;
-      if (userReplyText == "") {
-      } else {
+      if (userReplyText == "") {} else {
         newReply.innerHTML = userReplyText;
         document
           .getElementById("new-reply-parent-div" + number)
@@ -340,15 +317,30 @@ function createNoteDiv(note) {
         note.replies.push(userReplyText);
       }
     });
+
+  document.querySelector("[vote-b-" + number + "]").addEventListener("click", () => {
+    note.voteNumber++;
+    document.querySelector("[vote-n-" + number + "]").innerHTML = note.voteNumber;
+    console.log(allNotesArray)
+  });
 }
 
 /*******************  user login/account below *******************/
 
 // this array stores all users
 var userArray = [];
-userArray.push({ username: "Emil", password: "123" });
-userArray.push({ username: "Changzhou", password: "456" });
-userArray.push({ username: "Marcus", password: "789" });
+userArray.push({
+  username: "Emil",
+  password: "123"
+});
+userArray.push({
+  username: "Changzhou",
+  password: "456"
+});
+userArray.push({
+  username: "Marcus",
+  password: "789"
+});
 // this div contains Login or Account forms
 var accountDiv = document.getElementById("login-div");
 
@@ -371,7 +363,7 @@ function logout() {
   if (allNotesArray.length > 0) {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
-      document.getElementById("new-reply-child-div"+i).style.visibility = "hidden";
+      document.getElementById("new-reply-child-div" + i).style.visibility = "hidden";
     };
   }
   newNoteWindowClose();
@@ -383,7 +375,7 @@ function login() {
   if (allNotesArray.length > 0) {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
-      document.getElementById("new-reply-child-div"+i).style.visibility = "visible";
+      document.getElementById("new-reply-child-div" + i).style.visibility = "visible";
     };
   }
 }
@@ -391,7 +383,10 @@ function login() {
 function AddUser(name, password) {
   this.username = name;
   this.password = password;
-  var newUser = { username: name, password: password };
+  var newUser = {
+    username: name,
+    password: password
+  };
   console.log("username; " + name);
   console.log("password; " + password);
   if (name == "") {
