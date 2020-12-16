@@ -263,6 +263,7 @@ function logout() {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
       document.getElementById("new-reply-child-div"+i).style.visibility = "hidden";
+      document.getElementById("vote-b-"+i).style.visibility = "hidden";
     };
   }
   newNoteWindowClose();
@@ -275,6 +276,7 @@ function login() {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
       document.getElementById("new-reply-child-div"+i).style.visibility = "visible";
+      document.getElementById("vote-b-"+i).style.visibility = "visible";
     };
   }
 }
