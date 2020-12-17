@@ -10,9 +10,28 @@
   <meta name="keywords" content="bla bla" />
 
   <title>Note test</title>
+
+  <link rel="stylesheet" media="screen" href="http://fontlibrary.org/face/indie-flower" type="text/css"/>
+  <link rel="stylesheet" media="screen" href="http://fontlibrary.org/face/rursus-compact-mono" type="text/css"/>
 </head>
 
 <body>
+
+  <div class="topmenuWrapper"> 
+   
+    <div class="firstMenu">
+      <button class="newNote2" id="new-note2"><img src="omegapog2.png"></button>
+      <img src="notes2.png" class="logga">
+      <img src="loginPog10.png" class="loginLogga"> 
+      <b class="loginname"></b>
+      
+    </div>    
+
+</div>
+
+
+
+
   <button id="user-account">Account</button>
   <button id="logout-button"style="visibility: hidden;" >Logout</button>
   <button id="new-note">New Note</button>
@@ -26,28 +45,44 @@
 
     <!-- Note constructor starts here-->
     <div id="constr-new-note" class="individualNote">
+      <div class="newNoteTopTitle"><b>New Note</b></div>
       <!-- Form for User input of New Note-->
       <div>
         <form id="constr-form">
-          <label for="constr-title">New Note Title</label>
-          <input id="constr-title" type="text" name="constr-title" value="Input title"> <br>
+          <label for="constr-title" class="titleFont"><b>New Note Title</b></label>
+          <input id="constr-title" type="text" name="constr-title" value="" class="inputTitle" maxlength="12" size="24"> <br>
 
-          <input type=checkbox id="constr-tag1" name="tag1" value="Fun" js-tag>
-          <label for="tag1"> Tag as Fun</label><br>
-          <input type="checkbox" id="constr-tag2" name="tag2" value="Serious" js-tag>
-          <label for="tag2"> Tag as Serious</label><br>
-          <input type="checkbox" id="constr-tag3" name="tag3" value="Urgent" js-tag>
-          <label for="tag3"> Tag as URGENT!</label><br>
+          <div class="checkboxWrapper">
+                        
+            <label class="xCheckbox">
+                <input type="checkbox" id="constr-tag1" name="tag1" value="F" js-tag>
+                <span class="checkmark"></span>
+                <img src="fun10.png" class="funlogga">
+            </label>
 
-          <label for="constr-subject">New Note Subject</label>
-          <textarea id="constr-subject" rows="20" cols="25" placeholder="Enter Note subject Here">subject</textarea><br>
+            <label class="xCheckbox"> 
+                <input type="checkbox" id="constr-tag2" name="tag2" value="M" js-tag>
+                <span class="checkmark"></span>
+                <img src="meta10.png" class="metalogga">
+            </label>
+            
+            <label class="xCheckbox">
+                <input type="checkbox" id="constr-tag3" name="tag3" value="U" js-tag>
+                <span class="checkmark"></span>
+                <img src="urgent10.png" class="urgentlogga">
+            </label>    
+            
+          </div>
 
-          <input type="button" id="constr-submit" name="submit" value="Submit New Note">
-          <input type="button" id="constr-close" name="close" value="close">
+          <label for="constr-subject" class="newNoteSubjectTitle"><b>New Note Subject</b></label>
+          <textarea id="constr-subject" rows="12" cols="24" class="subjectTextArea" maxlength="275"></textarea><br>
+
+          <input type="button" id="constr-submit" name="submit" value="Submit" class="submitNoteButton">
+          <input type="button" id="constr-close" name="close" value="close"> 
 
         </form>
       </div>
-
+      
 
     </div>
     <!-- Note Constructor ends here-->

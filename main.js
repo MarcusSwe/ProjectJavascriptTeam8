@@ -1,4 +1,11 @@
 "use strict";
+
+var xName2 ="";
+var xCommentNumber = 0;
+var xTagFunTrue = false;
+var xTagMetaTrue = false;
+var xTagUrgentTrue = false;
+
 //hide and show functions
 function hide(...elements) {
   elements.forEach((el) => {
@@ -108,27 +115,71 @@ function createNoteDiv(note) {
   var number = note.number;
 
 
-  //create data-String to show
+  //create string with tags
   var tagString = "";
   tags.forEach((item) => {
-    tagString += item + " ";
+    //tagString += item + " ";
+    //check input value, if true image will get added to DOM with below code downstairs
+    if(item == "F"){ 
+      xTagFunTrue = true;
+    };
+
+    if(item == "M"){ 
+      xTagMetaTrue = true;
+    };
+
+    if(item == "U"){ 
+      xTagUrgentTrue = true;
+    };
+
   });
 
-  var dateString = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+
+  var dateString = date.toLocaleDateString(); //+ " " + date.toLocaleTimeString();
 
   //new element: main div wrapper
   var newMainDiv = document.createElement("DIV");
-  newMainDiv.setAttribute("class", "idividualNote");
+  newMainDiv.setAttribute("class", "individualNote");
   newMainDiv.setAttribute("id", "new-main-div" + number); 
   document.getElementById("main-parent").appendChild(newMainDiv);  
   // new element changed innerhtml to createElement for security 
   
+            var xTitle = document.createElement("div");
+            xTitle.setAttribute("id","new-title-div" + number);
+            xTitle.setAttribute("class", "newNoteTopTitle");
+            xTitle.textContent = title;
+            document.getElementById("new-main-div" + number).appendChild(xTitle);      
+                
+
             //first element inside note: subject
             var xSubject = document.createElement("div");
             xSubject.setAttribute("id","new-subject-div" + number);
+            xSubject.setAttribute("class","subjectInNote");
             xSubject.textContent = subject;
             document.getElementById("new-main-div" + number).appendChild(xSubject);
 
+            // new vote div
+            var newVoteDiv = document.createElement("DIV");
+            newVoteDiv.setAttribute("id", "new-vote-div" + number);
+            newVoteDiv.setAttribute("class", "voteDiv");
+            document.getElementById("new-main-div" + number).appendChild(newVoteDiv);
+
+                      //vote number
+                      var newVotetext = document.createElement("p");
+                      newVotetext.innerHTML=note.voteNumber;
+                      newVotetext.setAttribute("id", "vote-n-" + number);
+                      newVotetext.setAttribute("class", "voteNumber");
+                      document.getElementById("new-vote-div" + number).appendChild(newVotetext);
+
+                     //vote button
+                      var newVoteButton = document.createElement("input");
+                      newVoteButton.setAttribute("id", "vote-b-" + number);
+                      newVoteButton.src = "upvote3.png";
+                      newVoteButton.type = "image";
+                      newVoteButton.setAttribute("class", "voteButton");
+                      document.getElementById("new-vote-div" + number).appendChild(newVoteButton);
+
+     
             //second element inside note: noteinfo wrapper div
             var xNoteinfo = document.createElement("div");
             xNoteinfo.setAttribute("id","new-note-info-div" + number);
@@ -136,55 +187,97 @@ function createNoteDiv(note) {
             document.getElementById("new-main-div" + number).appendChild(xNoteinfo);
        
                       //NUMBER element inside noteinfo wrapper div
-                      var xNumber = document.createElement("div");
-                      xNumber.setAttribute("id","new-number-div" + number);
-                      xNumber.setAttribute("class","noteNumber");
-                      xNumber.textContent = number;
-                      document.getElementById("new-note-info-div" + number).appendChild(xNumber);
-          
-                      //TITLE element inside noteinfo wrapper div
-                      var xTitle = document.createElement("div");
-                      xTitle.setAttribute("id","new-title-div" + number);
-                      xTitle.textContent = title;
-                      document.getElementById("new-note-info-div" + number).appendChild(xTitle);
-          
+                     // var xNumber = document.createElement("div");
+                      //xNumber.setAttribute("id","new-number-div" + number);
+                      //xNumber.setAttribute("class","noteNumber");
+                      //xNumber.textContent = number;
+                      //document.getElementById("new-note-info-div" + number).appendChild(xNumber);                                    
+
+
+                     //NAME
+                     var xName = document.createElement("div");
+                     xName.setAttribute("id","new-tags-div" + number);
+                     xName.setAttribute("class","usernameMadenote");
+                     xName.textContent = xName2;
+                     document.getElementById("new-note-info-div" + number).appendChild(xName);
+
                       //DATE element inside noteinfo wrapper div
                       var xDate = document.createElement("div");
                       xDate.setAttribute("id","new-date-div" + number);
+                      xDate.setAttribute("class","dateInNote");
                       xDate.textContent = dateString;
                       document.getElementById("new-note-info-div" + number).appendChild(xDate);
+
+
+                      //TAG element tagwrapper
+                      var tagWrapper = document.createElement("div");
+                      tagWrapper.setAttribute("id", "tagwrapper" + number);
+                      tagWrapper.setAttribute("class", "tagwrapper");
+                      document.getElementById("new-main-div" + number).appendChild(tagWrapper);
+                      
+                              var xTagFun = document.createElement("img");
+                              xTagFun.setAttribute("src","fun10.png");
+                              xTagFun.setAttribute("class","funloggaInNote");
+                              if (xTagFunTrue){
+                              document.getElementById("tagwrapper" + number).appendChild(xTagFun);
+                              var xTagFunTrue = false;
+                              };                      
+
+                              var xTagMeta = document.createElement("img");
+                              xTagMeta.setAttribute("src","meta10.png");
+                              xTagMeta.setAttribute("class","metaloggaInNote");
+                              if (xTagMetaTrue){
+                              document.getElementById("tagwrapper" + number).appendChild(xTagMeta);
+                              var xTagMetaTrue = false;
+                              };                      
+
+                              var xTagUrgent = document.createElement("img");
+                              xTagUrgent.setAttribute("src","urgent10.png");                                            
+                              xTagUrgent.setAttribute("class","urgentloggaInNote");
+                              if (xTagUrgentTrue){
+                              document.getElementById("tagwrapper" + number).appendChild(xTagUrgent);
+                              var xTagUrgentTrue = false;
+                              };
+
+               
           
-                      //TAG element inside noteinfo wrapper div
-                      var xTag = document.createElement("div");
-                      xTag.setAttribute("id","new-tags-div" + number);
-                      xTag.textContent = tagString;
-                      document.getElementById("new-note-info-div" + number).appendChild(xTag);
+                      
+            //show Replys             
+            var showReplyButton = document.createElement("input");
+            showReplyButton.setAttribute("id", "ReplyButton" + number);
+            showReplyButton.src = "omegapog2.png";
+            showReplyButton.type = "image";
+            showReplyButton.setAttribute("class", "showReplyButton");
+            document.getElementById("new-date-div" + number).appendChild(showReplyButton);           
+
+            //comment numbers        
+            var showCommentsNumbers = document.createElement("b");
+            showCommentsNumbers.setAttribute("id", "commentNumbers" + number);
+            showCommentsNumbers.setAttribute("class", "commentNumbers");
+            showCommentsNumbers.innerText = parseInt(xCommentNumber) + " comments";
+            document.getElementById("new-date-div" + number).appendChild(showCommentsNumbers);
+                        
+                
 
             //third element inside note: replay wrapper div
             var xReplyParent = document.createElement("div");
             xReplyParent.setAttribute("id","new-reply-parent-div" + number);
             xReplyParent.setAttribute("class", "replyParent");
-            document.getElementById("new-main-div" + number).appendChild(xReplyParent);
+            document.getElementById("new-main-div" + number).appendChild(xReplyParent);                    
+                              
+                      //Reply button element
+                      var xReplyButton = document.createElement("button");
+                      xReplyButton.setAttribute("id","new-title-reply-button" + number);
+                      xReplyButton.setAttribute("class","replyButton");
+                      xReplyButton.innerText = "Reply";
+                      document.getElementById("new-reply-parent-div" + number).appendChild(xReplyButton);
 
-                       // new vote div
-                       var newVoteDiv = document.createElement("DIV");
-                       newVoteDiv.setAttribute("id", "new-vote-div" + number);
-                       newVoteDiv.setAttribute("class", "voteDiv");
-                       document.getElementById("new-reply-parent-div" + number).appendChild(newVoteDiv);
-
-                                //vote button
-                                 var newVoteButton = document.createElement("BUTTON");
-                                 newVoteButton.innerHTML="Vote";
-                                 newVoteButton.setAttribute("id", "vote-b-" + number);
-                                 newVoteButton.setAttribute("class", "voteButton");
-                                 document.getElementById("new-vote-div" + number).appendChild(newVoteButton);
-                                //vote number
-                                 var newVotetext = document.createElement("p");
-                                 newVotetext.innerHTML=note.voteNumber;
-                                 newVotetext.setAttribute("id", "vote-n-" + number);
-                                 newVotetext.setAttribute("class", "voteButton");
-                                 document.getElementById("new-vote-div" + number).appendChild(newVotetext);
-                       
+                      //Reply textarea element
+                      var xReplyTextarea = document.createElement("textarea");
+                      xReplyTextarea.setAttribute("id","new-title-reply-textarea" + number);
+                      xReplyTextarea.setAttribute("class","replyTextarea");
+                      xReplyTextarea.setAttribute("maxlength","100");
+                      document.getElementById("new-reply-parent-div" + number).appendChild(xReplyTextarea);
 
                        //Replay child element wrapper
                        var xReplyChild = document.createElement("div");
@@ -192,19 +285,11 @@ function createNoteDiv(note) {
                        xReplyChild.setAttribute("class", "replyChild");
                        document.getElementById("new-reply-parent-div" + number).appendChild(xReplyChild);
 
-                               //Reply button element
-                               var xReplyButton = document.createElement("button");
-                               xReplyButton.setAttribute("id","new-title-reply-button" + number);
-                               xReplyButton.setAttribute("class","replyButton");
-                               xReplyButton.innerText = "Reply";
-                               document.getElementById("new-reply-child-div" + number).appendChild(xReplyButton);
+                               
+                              
 
-                               //Reply textarea element
-                               var xReplyTextarea = document.createElement("textarea");
-                               xReplyTextarea.setAttribute("id","new-title-reply-textarea" + number);
-                               xReplyTextarea.setAttribute("class","replyTextarea");
-                               xReplyTextarea.setAttribute("placeholder", "Reply");
-                               document.getElementById("new-reply-child-div" + number).appendChild(xReplyTextarea);
+
+
 
   // setting eventlistener to reply button. Adds data from textfield to new div in reply parent div
   document
@@ -215,16 +300,34 @@ function createNoteDiv(note) {
         "new-title-reply-textarea" + number
       ).value;
       if (userReplyText == "") {} else {
-        newReply.innerHTML = userReplyText;
+        newReply.innerText = xName2 + " " + "said: " + userReplyText;
         document
-          .getElementById("new-reply-parent-div" + number)
-          .appendChild(newReply);
+          .getElementById("new-reply-child-div" + number)
+          .prepend(newReply);
         newReply.setAttribute("id", "reply-div" + number);
         newReply.setAttribute("class", "reply");
         document.getElementById("new-title-reply-textarea" + number).value = "";
         note.replies.push(userReplyText);
+        //added comment counter
+        xCommentNumber = parseInt(document.getElementById("commentNumbers" + number).innerText) +1;
+        document.getElementById("commentNumbers" + number).innerText = parseInt(xCommentNumber) + " comments";
+        xCommentNumber = 0;
       }
     });
+
+
+
+
+//open replay window up or close..
+    document.getElementById("ReplyButton" + number).addEventListener("click", function(){
+      document.getElementById("new-reply-parent-div" + number).classList.toggle("show");
+
+    });
+
+
+
+
+
 
   //vote function
   document.getElementById("vote-b-" + number).addEventListener("click", () => {
@@ -232,6 +335,10 @@ function createNoteDiv(note) {
     document.getElementById("vote-n-" + number).innerHTML = note.voteNumber;
   });
 }
+
+
+
+
 
 /*******************  user login/account below *******************/
 
@@ -263,7 +370,6 @@ function logout() {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
       document.getElementById("new-reply-child-div"+i).style.visibility = "hidden";
-      document.getElementById("vote-b-"+i).style.visibility = "hidden";
     };
   }
   newNoteWindowClose();
@@ -276,7 +382,6 @@ function login() {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
       document.getElementById("new-reply-child-div"+i).style.visibility = "visible";
-      document.getElementById("vote-b-"+i).style.visibility = "visible";
     };
   }
 }
@@ -337,7 +442,8 @@ function ValidateLogin(name, pass) {
   if (correct) {
     document.getElementById("login-form").reset();
     document.getElementById("login-state").innerHTML =
-      "You are logged in as " + name;
+       name;
+      xName2 = name;
     login();
     accountClose();
   } else {
@@ -377,3 +483,4 @@ function newUserShow() {
     document.getElementById("new-user-form").reset();
   });
 }
+
