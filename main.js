@@ -5,6 +5,8 @@ var xCommentNumber = 0;
 var xTagFunTrue = false;
 var xTagMetaTrue = false;
 var xTagUrgentTrue = false;
+var dontJudgeMe = false;
+
 
 //hide and show functions
 function hide(...elements) {
@@ -121,15 +123,15 @@ function createNoteDiv(note) {
     //tagString += item + " ";
     //check input value, if true image will get added to DOM with below code downstairs
     if(item == "F"){ 
-      xTagFunTrue = true;
+      xTagFunTrue = true;      
     };
 
     if(item == "M"){ 
-      xTagMetaTrue = true;
+      xTagMetaTrue = true;      
     };
 
     if(item == "U"){ 
-      xTagUrgentTrue = true;
+      xTagUrgentTrue = true;      
     };
 
   });
@@ -220,7 +222,8 @@ function createNoteDiv(note) {
                               xTagFun.setAttribute("class","funloggaInNote");
                               if (xTagFunTrue){
                               document.getElementById("tagwrapper" + number).appendChild(xTagFun);
-                              var xTagFunTrue = false;
+                              xTagFunTrue = false;    
+                              dontJudgeMe = true;                            
                               };                      
 
                               var xTagMeta = document.createElement("img");
@@ -228,7 +231,8 @@ function createNoteDiv(note) {
                               xTagMeta.setAttribute("class","metaloggaInNote");
                               if (xTagMetaTrue){
                               document.getElementById("tagwrapper" + number).appendChild(xTagMeta);
-                              var xTagMetaTrue = false;
+                              xTagMetaTrue = false;                              
+                              dontJudgeMe = true;
                               };                      
 
                               var xTagUrgent = document.createElement("img");
@@ -236,7 +240,8 @@ function createNoteDiv(note) {
                               xTagUrgent.setAttribute("class","urgentloggaInNote");
                               if (xTagUrgentTrue){
                               document.getElementById("tagwrapper" + number).appendChild(xTagUrgent);
-                              var xTagUrgentTrue = false;
+                              xTagUrgentTrue = false;                            
+                              dontJudgeMe = true;
                               };
 
                
@@ -262,7 +267,7 @@ function createNoteDiv(note) {
             //third element inside note: replay wrapper div
             var xReplyParent = document.createElement("div");
             xReplyParent.setAttribute("id","new-reply-parent-div" + number);
-            xReplyParent.setAttribute("class", "replyParent");
+            xReplyParent.setAttribute("class", "replyParent");             
             document.getElementById("new-main-div" + number).appendChild(xReplyParent);                    
                               
                       //Reply button element
@@ -285,7 +290,12 @@ function createNoteDiv(note) {
                        xReplyChild.setAttribute("class", "replyChild");
                        document.getElementById("new-reply-parent-div" + number).appendChild(xReplyChild);
 
-                               
+               if(dontJudgeMe) {
+                document.getElementById("new-reply-parent-div" + number).style.top = "-220px";  
+                dontJudgeMe = false;
+               }
+               
+              
                               
 
 
