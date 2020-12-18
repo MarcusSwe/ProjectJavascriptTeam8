@@ -755,7 +755,6 @@ textarea {
     overflow: auto;
     box-shadow: 10px 10px 8px #00000063;
     position: relative; 
-    display: none;
     top: -198px;
     width: 260px;
    
@@ -791,14 +790,3 @@ textarea {
     top: 55px;
     right: 252px;
 }
-
-.show {display: block;}
-
-/*
-#template-individual-note{
-    visibility: hidden;
-}
-#draft-individual-note{
-    visibility: hidden;
-}
-*/

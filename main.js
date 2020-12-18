@@ -142,7 +142,8 @@ function createNoteDiv(note) {
   //new element: main div wrapper
   var newMainDiv = document.createElement("DIV");
   newMainDiv.setAttribute("class", "individualNote");
-  newMainDiv.setAttribute("id", "new-main-div" + number); 
+  newMainDiv.setAttribute("id", "new-main-div" + number);
+  newMainDiv.setAttribute("js-noteDiv", number)
   document.getElementById("main-parent").appendChild(newMainDiv);  
   // new element changed innerhtml to createElement for security 
   
@@ -171,6 +172,7 @@ function createNoteDiv(note) {
                       newVotetext.innerHTML=note.voteNumber;
                       newVotetext.setAttribute("id", "vote-n-" + number);
                       newVotetext.setAttribute("class", "voteNumber");
+                      newVotetext.setAttribute("js-noteVote", "")
                       document.getElementById("new-vote-div" + number).appendChild(newVotetext);
 
                      //vote button
@@ -267,7 +269,7 @@ function createNoteDiv(note) {
             //third element inside note: replay wrapper div
             var xReplyParent = document.createElement("div");
             xReplyParent.setAttribute("id","new-reply-parent-div" + number);
-            xReplyParent.setAttribute("class", "replyParent");             
+            xReplyParent.setAttribute("class", "replyParent hidden");             
             document.getElementById("new-main-div" + number).appendChild(xReplyParent);                    
                               
                       //Reply button element
@@ -331,8 +333,12 @@ function createNoteDiv(note) {
 
 //open replay window up or close..
     document.getElementById("ReplyButton" + number).addEventListener("click", function(){
-      document.getElementById("new-reply-parent-div" + number).classList.toggle("show");
-
+      let el = document.getElementById("new-reply-parent-div" + number);
+      if (el.classList.contains("hidden")) {
+        show(el)
+      } else {
+        hide(el)
+      }
     });
 
 
@@ -515,9 +521,8 @@ sortButton.addEventListener('click',sortData);
 
 function sortData() {
   let notes = {
-    divs: document.querySelectorAll(".idividualNote"),
-    number: document.querySelectorAll(".noteNumber"),
-    vote: document.querySelectorAll(".voteNumber")
+    divs: document.querySelectorAll("[js-noteDiv]"),
+    vote: document.querySelectorAll("[js-noteVote]")
   }
 
   if (notes.divs.length > 0) {
@@ -544,14 +549,14 @@ function sortData() {
     // sort by number
     }else {
       let newOrder = []
-      notes.number.forEach((el) => newOrder.push(el.innerHTML))
+      notes.divs.forEach((el) => newOrder.push(el.getAttribute("js-noteDiv")))
       newOrder.sort((a, b) => a - b);
 
       notes.divs.forEach((el) => document.getElementById("main-parent").removeChild(el))
 
       newOrder.forEach(n => {
-        notes.number.forEach((el, index) => {
-          if (el.innerHTML == n) {
+        notes.divs.forEach((el, index) => {
+          if (el.getAttribute("js-noteDiv") == n) {
             document.getElementById("main-parent").appendChild(notes.divs[index]);
           }
         })
