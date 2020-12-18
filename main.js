@@ -121,18 +121,18 @@ function createNoteDiv(note) {
   var tagString = "";
   tags.forEach((item) => {
     //tagString += item + " ";
-    //check input value, if true image will get added to DOM with below code downstairs
-    if(item == "F"){ 
-      xTagFunTrue = true;      
-    };
-
-    if(item == "M"){ 
-      xTagMetaTrue = true;      
-    };
-
-    if(item == "U"){ 
-      xTagUrgentTrue = true;      
-    };
+    //changed to handle image tags
+    switch(item) {
+         case "F":
+              xTagFunTrue = true;
+              break;
+         case "M":
+              xTagMetaTrue = true;
+              break;
+         case "U":
+              xTagUrgentTrue = true;
+              break;
+    }
 
   });
 
@@ -296,7 +296,7 @@ function createNoteDiv(note) {
                }
                
               
-                              
+               
 
 
 
@@ -314,6 +314,7 @@ function createNoteDiv(note) {
         document
           .getElementById("new-reply-child-div" + number)
           .prepend(newReply);
+        //changed order tp push newest reply first  
         newReply.setAttribute("id", "reply-div" + number);
         newReply.setAttribute("class", "reply");
         document.getElementById("new-title-reply-textarea" + number).value = "";
@@ -364,9 +365,12 @@ var accountDiv = document.getElementById("login-div");
 accountDiv.innerHTML = ""; // sets initial value of login div to ""
 document.getElementById("user-account").addEventListener("click", function () {
   if (accountDiv.innerHTML == "") {
-    loginShow();
-  } else {
+    loginShow();    
+    document.getElementById("login-div").style.display = "block";                   
+    } else {
+      
     accountClose();
+    
   }
 });
 
@@ -380,6 +384,9 @@ function logout() {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
       document.getElementById("new-reply-child-div"+i).style.visibility = "hidden";
+      document.getElementById("vote-b-"+i).style.visibility = "hidden";
+      //added replay button
+      document.getElementById("ReplyButton"+i).style.visibility = "hidden";
     };
   }
   newNoteWindowClose();
@@ -392,8 +399,12 @@ function login() {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
       document.getElementById("new-reply-child-div"+i).style.visibility = "visible";
+      document.getElementById("vote-b-"+i).style.visibility = "visible";
+      //added reply button
+      document.getElementById("ReplyButton"+i).style.visibility = "visible";
     };
   }
+  document.getElementById("login-div").style.display = "none";  
 }
 // constructs user from username+password and sends user to userArray
 function AddUser(name, password) {
@@ -464,6 +475,7 @@ function ValidateLogin(name, pass) {
 // closes accountDiv
 function accountClose() {
   accountDiv.innerHTML = "";
+  document.getElementById("login-div").style.display = "none"; 
 }
 //shows new account in accountDiv and gets Data from user input
 function newUserShow() {
@@ -492,5 +504,62 @@ function newUserShow() {
     new AddUser(userUsername.value, userPassword.value);
     document.getElementById("new-user-form").reset();
   });
+}
+
+
+
+//*******************Sort Function*************************/
+
+var sortButton = document.getElementById("sortButton")
+sortButton.addEventListener('click',sortData);
+
+function sortData() {
+  let notes = {
+    divs: document.querySelectorAll(".idividualNote"),
+    number: document.querySelectorAll(".noteNumber"),
+    vote: document.querySelectorAll(".voteNumber")
+  }
+
+  if (notes.divs.length > 0) {
+
+    //Sort by vote
+    if (sortButton.innerHTML == "Sort by vote") {
+      let newOrder = []
+      notes.vote.forEach((el) => newOrder.push(el.innerHTML))
+      newOrder.sort((a, b) => a - b);
+      newOrder.reverse();
+
+      notes.divs.forEach((el) => document.getElementById("main-parent").removeChild(el))
+
+      newOrder.forEach(n => {
+        notes.vote.forEach((el, index) => {
+          if (el.innerHTML == n) {
+            document.getElementById("main-parent").appendChild(notes.divs[index]);
+          }
+        })
+      })
+
+      sortButton.innerHTML = "sort by number"
+
+    // sort by number
+    }else {
+      let newOrder = []
+      notes.number.forEach((el) => newOrder.push(el.innerHTML))
+      newOrder.sort((a, b) => a - b);
+
+      notes.divs.forEach((el) => document.getElementById("main-parent").removeChild(el))
+
+      newOrder.forEach(n => {
+        notes.number.forEach((el, index) => {
+          if (el.innerHTML == n) {
+            document.getElementById("main-parent").appendChild(notes.divs[index]);
+          }
+        })
+      })
+
+      sortButton.innerHTML = "Sort by vote"
+
+    }
+  }
 }
 

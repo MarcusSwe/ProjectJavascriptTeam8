@@ -34,6 +34,17 @@ body {
 *::.webkit-scrollbar-button {}
 
 
+.hidden{
+    display: none;
+}
+
+.visible{
+    display: block;
+}
+
+
+
+
 .topmenuWrapper {
     background-color: rgba(1, 183, 238, 0.562);
     /*display:inline-flex;   */
@@ -74,6 +85,37 @@ body {
     height: 100%;
     float:right;
     opacity: 75%;
+}
+
+.topMenuButtons {
+    position: relative;
+    top: -3px;
+    float:right;
+    font-family: 'IndieFlowerRegular';
+    font-weight: normal;
+    font-style: bold;
+    font-size: 15px;
+    color:rgb(1, 210, 238) ;
+    background-color: rgba(0, 0, 0, 0.39);
+    border-color:rgb(0, 0, 0) ;
+    
+}
+
+.topMenuButtons:focus {
+    border-color:#00000063;
+    outline: none;
+}
+
+.topMenuLoginState {
+    position: relative;
+    top: -14px;
+    float:right;
+    font-family: 'IndieFlowerRegular';
+    font-weight: normal;
+    font-style: bold;
+    font-size: 15px;
+    color: black;
+    margin-right: 8px;
 }
 
 .newNote {
@@ -150,16 +192,113 @@ aside {
 
 }
 
+.loginDiv {
+    display: none;   
+    max-width: 700px;
+    margin: 5px;
+    border: 2px solid black;
+    background-color: rgba(0, 0, 0, 0.753);
+    border-color:rgb(1, 238, 255) ;
+    margin-bottom: 45px;
+    max-height: 365px;
+    
+    box-shadow: 10px 10px 8px #00000063;
+    font-family: 'RursusCompactMonoMedium';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 16px;
+    color: rgb(1, 210, 238) ;
+
+}
+
+#user-login-button {
+    position: relative;
+    font-family: 'IndieFlowerRegular';
+    font-weight: normal;
+    font-style: bold;
+    font-size: 15px;
+    color:rgb(1, 210, 238) ;
+    background-color: rgba(0, 0, 0, 0.39);
+    border-color:rgb(0, 0, 0) ;
+}
+
+#topMenuButtons:focus {
+    border-color:#00000063;
+    outline: none;
+}
+
+#new-user-button {
+    position: relative;
+    font-family: 'IndieFlowerRegular';
+    font-weight: normal;
+    font-style: bold;
+    font-size: 15px;
+    color:rgb(1, 210, 238) ;
+    background-color: rgba(0, 0, 0, 0.39);
+    border-color:rgb(0, 0, 0) ;
+}
+
+#new-user-button:focus {
+    border-color:#00000063;
+    outline: none;
+}
+
+#user-login {
+    position: relative;
+    font-family: 'IndieFlowerRegular';
+    font-weight: normal;
+    font-style: bold;
+    font-size: 15px;
+    color:rgb(1, 210, 238) ;
+    background-color: rgba(0, 0, 0, 0.39);
+    border-color:rgb(0, 0, 0) ;
+}
+
+#user-login {
+    border-color:#00000063;
+    outline: none;
+}
+
+#new-user {
+    position: relative;
+    font-family: 'IndieFlowerRegular';
+    font-weight: normal;
+    font-style: bold;
+    font-size: 15px;
+    color:rgb(1, 210, 238) ;
+    background-color: rgba(0, 0, 0, 0.39);
+    border-color:rgb(0, 0, 0) ;
+}
+
+#new-user {
+    border-color:#00000063;
+    outline: none;
+}
+
+
+#constr-new-note {
+    max-width: 300px;
+    margin: 5px;
+    border: 2px solid black;
+    background-color: rgba(0, 0, 0, 0.753);
+    border-color:rgb(1, 238, 255) ;
+    margin-bottom: 25px;
+    height: 515px;
+    
+    box-shadow: 10px 10px 8px #00000063;
+
+}
+
+
 .mainParentNote{
     border: 0px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(50px, 300px));
     max-width: 960px;    
-    grid-gap: 20px;
-    
-  
-    
+    grid-gap: 20px;       
 }
+
+
 
 .titleFont {
     font-family: 'IndieFlowerRegular';
@@ -189,6 +328,72 @@ aside {
     border-color:#00000063;
     outline: none;
 }
+
+#login-username {
+    position: relative;
+    border:5px ;
+    border-color: rgb(1, 238, 255) ;
+    border-radius: 3px;
+    background-color: rgba(2, 213, 250, 0.918);
+    height: 25px;
+    width: 170px;
+}
+
+#login-username:focus {
+    border: 0px solid black;
+    border-color:#00000063;
+    outline: none;
+}
+
+#login-password {
+    position: relative;
+    border:5px ;
+    border-color: rgb(1, 238, 255) ;
+    border-radius: 3px;
+    background-color: rgba(2, 213, 250, 0.918);
+    height: 25px;
+    width: 170px;
+}
+
+#login-password:focus {
+    border: 0px solid black;
+    border-color:#00000063;
+    outline: none;
+}
+
+#new-username {
+    position: relative;
+    border:5px ;
+    border-color: rgb(1, 238, 255) ;
+    border-radius: 3px;
+    background-color: rgba(2, 213, 250, 0.918);
+    height: 25px;
+    width: 170px;
+}
+
+#new-username:focus {
+    border: 0px solid black;
+    border-color:#00000063;
+    outline: none;
+}
+
+#new-password {
+    position: relative;
+    border:5px ;
+    border-color: rgb(1, 238, 255) ;
+    border-radius: 3px;
+    background-color: rgba(2, 213, 250, 0.918);
+    height: 25px;
+    width: 170px;
+}
+
+#new-password:focus {
+    border: 0px solid black;
+    border-color:#00000063;
+    outline: none;
+}
+
+
 
 .subjectTextArea:focus {
     border: 0px solid black;
@@ -372,6 +577,32 @@ textarea {
     border-color:#00000063;
     outline: none;
 }
+
+
+
+#constr-close {
+    width: 55px;
+    font-family: 'IndieFlowerRegular';
+    font-weight: normal;
+    font-style: bold;
+    font-size: 20px;
+    color:rgb(1, 210, 238) ;
+    background-color: rgba(0, 0, 0, 0.39);
+    border-color:rgb(0, 0, 0) ;
+    position: relative;
+    top: -55px;
+    float: left;
+
+}
+
+#constr-close:focus {
+    
+    border-color:#00000063;
+    outline: none;
+}
+
+
+
 
 .replyButton {
     width: 50px;
