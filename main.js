@@ -576,7 +576,7 @@ function newUserShow() {
   accountDiv.appendChild(loginP);
   //login form
   var loginForm = document.createElement("form");
-  loginForm.setAttribute("id","login-form");
+  loginForm.setAttribute("id","new-user-form");
   accountDiv.appendChild(loginForm);
         // label username
         var loginUsernameLabel = document.createElement("label");
