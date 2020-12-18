@@ -182,7 +182,7 @@ function createNoteDiv(note) {
                                  var newVotetext = document.createElement("p");
                                  newVotetext.innerHTML=note.voteNumber;
                                  newVotetext.setAttribute("id", "vote-n-" + number);
-                                 newVotetext.setAttribute("class", "voteButton");
+                                 newVotetext.setAttribute("class", "voteNumber");
                                  document.getElementById("new-vote-div" + number).appendChild(newVotetext);
                        
 
@@ -376,4 +376,60 @@ function newUserShow() {
     new AddUser(userUsername.value, userPassword.value);
     document.getElementById("new-user-form").reset();
   });
+}
+
+
+//*******************Sort Function*************************/
+
+var sortButton = document.getElementById("sortButton")
+sortButton.addEventListener('click',sortData);
+
+function sortData() {
+  let notes = {
+    divs: document.querySelectorAll(".idividualNote"),
+    number: document.querySelectorAll(".noteNumber"),
+    vote: document.querySelectorAll(".voteNumber")
+  }
+
+  if (notes.divs.length > 0) {
+
+    //Sort by vote
+    if (sortButton.innerHTML == "Sort by vote") {
+      let newOrder = []
+      notes.vote.forEach((el) => newOrder.push(el.innerHTML))
+      newOrder.sort((a, b) => a - b);
+      newOrder.reverse();
+
+      notes.divs.forEach((el) => document.getElementById("main-parent").removeChild(el))
+
+      newOrder.forEach(n => {
+        notes.vote.forEach((el, index) => {
+          if (el.innerHTML == n) {
+            document.getElementById("main-parent").appendChild(notes.divs[index]);
+          }
+        })
+      })
+
+      sortButton.innerHTML = "sort by number"
+
+    // sort by number
+    }else {
+      let newOrder = []
+      notes.number.forEach((el) => newOrder.push(el.innerHTML))
+      newOrder.sort((a, b) => a - b);
+
+      notes.divs.forEach((el) => document.getElementById("main-parent").removeChild(el))
+
+      newOrder.forEach(n => {
+        notes.number.forEach((el, index) => {
+          if (el.innerHTML == n) {
+            document.getElementById("main-parent").appendChild(notes.divs[index]);
+          }
+        })
+      })
+
+      sortButton.innerHTML = "Sort by vote"
+
+    }
+  }
 }
