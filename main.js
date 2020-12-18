@@ -383,10 +383,12 @@ function logout() {
   if (allNotesArray.length > 0) {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
-      document.getElementById("new-reply-child-div"+i).style.visibility = "hidden";
+      //document.getElementById("new-reply-child-div"+i).style.visibility = "hidden";
       document.getElementById("vote-b-"+i).style.visibility = "hidden";
       //added replay button
-      document.getElementById("ReplyButton"+i).style.visibility = "hidden";
+      //document.getElementById("ReplyButton"+i).style.visibility = "hidden";
+      document.getElementById("new-title-reply-button" + i).style.display = "none";
+      document.getElementById("new-title-reply-textarea" + i).style.display = "none";
     };
   }
   newNoteWindowClose();
@@ -398,10 +400,12 @@ function login() {
   if (allNotesArray.length > 0) {
     var i;
     for (i = 1; i <= allNotesArray.length; i++) {
-      document.getElementById("new-reply-child-div"+i).style.visibility = "visible";
+      //document.getElementById("new-reply-child-div"+i).style.visibility = "visible";
       document.getElementById("vote-b-"+i).style.visibility = "visible";
       //added reply button
-      document.getElementById("ReplyButton"+i).style.visibility = "visible";
+      //document.getElementById("ReplyButton"+i).style.visibility = "visible";
+      document.getElementById("new-title-reply-button" + i).style.display = "block";
+      document.getElementById("new-title-reply-textarea" + i).style.display = "block";
     };
   }
   document.getElementById("login-div").style.display = "none";  
@@ -424,18 +428,80 @@ function AddUser(name, password) {
 }
 // shows Login form in accountDiv
 function loginShow() {
-  accountDiv.innerHTML =
-    "<button id=user-login-button>Login</button>" +
-    "<button id=new-user-button>New Account</button>" +
-    "<h4>Login</h4>" +
-    "<p>Input username and and password to login.</p>" +
-    "<form id=login-form>" +
-    "<label for=login-usenamer>Username</label>" +
-    "<input id=login-username type=text name=login-username placeholder=Input username>" +
-    "<label for=login-password>Password</label>" +
-    "<input id=login-password type=password name=login-password placeholder=Input password>" +
-    "<input type=button id=user-login name=login-user value=Submit>" +
-    "</form>";
+  accountDiv.innerHTML = "";
+  //login button
+  var loginButton = document.createElement("button");
+  loginButton.setAttribute("id","user-login-button");
+  var loginButtonText = document.createTextNode("Login");
+  loginButton.appendChild(loginButtonText);
+  accountDiv.appendChild(loginButton);
+  //new account button
+  var newAccountButton = document.createElement("button");
+  newAccountButton.setAttribute("id","new-user-button");
+  var NewAccButtonText = document.createTextNode("New Account");
+  newAccountButton.appendChild(NewAccButtonText);
+  accountDiv.appendChild(newAccountButton);
+  // login H4
+  var loginH4 = document.createElement("h4");
+  var loginH4Text = document.createTextNode("Login");
+  loginH4.appendChild(loginH4Text);
+  accountDiv.appendChild(loginH4);
+  // login p
+  var loginP = document.createElement("p");
+  var loginPText = document.createTextNode("Input username and and password to login.");
+  loginP.appendChild(loginPText);
+  accountDiv.appendChild(loginP);
+  //login form
+  var loginForm = document.createElement("form");
+  loginForm.setAttribute("id","login-form");
+  accountDiv.appendChild(loginForm);
+        // label username
+        var loginUsernameLabel = document.createElement("label");
+        loginUsernameLabel.setAttribute("for","login-username");
+        var userLabelText = document.createTextNode("Username");
+        loginUsernameLabel.appendChild(userLabelText);
+        loginForm.appendChild(loginUsernameLabel);
+        // input text username
+        var loginUsernameInput = document.createElement("input");
+        loginUsernameInput.setAttribute("id","login-username");
+        loginUsernameInput.setAttribute("type","text");
+        loginUsernameInput.setAttribute("name","login-username");
+        loginUsernameInput.setAttribute("placeholder","Input Username");
+        loginForm.appendChild(loginUsernameInput);
+        // label password
+        var loginPasswordLabel = document.createElement("label");
+        loginPasswordLabel.setAttribute("for","login-password");
+        var passLabelText = document.createTextNode("Password");
+        loginPasswordLabel.appendChild(passLabelText);
+        loginForm.appendChild(loginPasswordLabel);
+        // input password
+        var loginPasswordInput = document.createElement("input");
+        loginPasswordInput.setAttribute("id","login-password");
+        loginPasswordInput.setAttribute("type","password");
+        loginPasswordInput.setAttribute("name","login-password");
+        loginPasswordInput.setAttribute("placeholder","Input Password");
+        loginForm.appendChild(loginPasswordInput);
+        // submit button
+        var loginSubmitButton = document.createElement("button");
+        loginSubmitButton.setAttribute("id","user-login");
+        loginSubmitButton.setAttribute("name","login-user");
+        loginSubmitButton.setAttribute("type","button");
+        var logSubmitText = document.createTextNode("Submit");
+        loginSubmitButton.appendChild(logSubmitText);
+        loginForm.appendChild(loginSubmitButton);
+  
+  // accountDiv.innerHTML =
+  //   "<button id=user-login-button>Login</button>" +
+  //   "<button id=new-user-button>New Account</button>" +
+  //   "<h4>Login</h4>" +
+  //   "<p>Input username and and password to login.</p>" +
+  //   "<form id=login-form>" +
+  //   "<label for=login-usenamer>Username</label>" +
+  //   "<input id=login-username type=text name=login-username placeholder=Input username>" +
+  //   "<label for=login-password>Password</label>" +
+  //   "<input id=login-password type=password name=login-password placeholder=Input password>" +
+  //   "<input type=button id=user-login name=login-user value=Submit>" +
+  //   "</form>";
   document
     .getElementById("user-login-button")
     .addEventListener("click", loginShow);
@@ -479,18 +545,79 @@ function accountClose() {
 }
 //shows new account in accountDiv and gets Data from user input
 function newUserShow() {
-  accountDiv.innerHTML =
-    "<button id=user-login-button>Login</button>" +
-    "<button id=new-user-button>New Account</button>" +
-    "<h4>New Account</h4>" +
-    "<p>Input new username and and password to create new user account.</p>" +
-    "<form id=new-user-form>" +
-    "<label for= new-username>Username</label>" + 
-    "<input id=new-username type=text name=new-username placeholder='Input new username'>" + 
-    "<label for=new-password>Password</label>" +
-    "<input id=new-password type=text name=new-password placeholder='Input wanted password'>" +
-    "<input type=button id=new-user name=submit-user value=Create>" +
-    "</form>";
+  accountDiv.innerHTML = "";
+  //login button
+  var loginButton = document.createElement("button");
+  loginButton.setAttribute("id","user-login-button");
+  var loginButtonText = document.createTextNode("Login");
+  loginButton.appendChild(loginButtonText);
+  accountDiv.appendChild(loginButton);
+  //new account button
+  var newAccountButton = document.createElement("button");
+  newAccountButton.setAttribute("id","new-user-button");
+  var NewAccButtonText = document.createTextNode("New Account");
+  newAccountButton.appendChild(NewAccButtonText);
+  accountDiv.appendChild(newAccountButton);
+  // login H4
+  var loginH4 = document.createElement("h4");
+  var loginH4Text = document.createTextNode("New Account");
+  loginH4.appendChild(loginH4Text);
+  accountDiv.appendChild(loginH4);
+  // login p
+  var loginP = document.createElement("p");
+  var loginPText = document.createTextNode("Input new username and and password to create new user account.");
+  loginP.appendChild(loginPText);
+  accountDiv.appendChild(loginP);
+  //login form
+  var loginForm = document.createElement("form");
+  loginForm.setAttribute("id","login-form");
+  accountDiv.appendChild(loginForm);
+        // label username
+        var loginUsernameLabel = document.createElement("label");
+        loginUsernameLabel.setAttribute("for","login-username");
+        var userLabelText = document.createTextNode("Username");
+        loginUsernameLabel.appendChild(userLabelText);
+        loginForm.appendChild(loginUsernameLabel);
+        // input text username
+        var loginUsernameInput = document.createElement("input");
+        loginUsernameInput.setAttribute("id","new-username");
+        loginUsernameInput.setAttribute("type","text");
+        loginUsernameInput.setAttribute("name","new-username");
+        loginUsernameInput.setAttribute("placeholder","Input Username");
+        loginForm.appendChild(loginUsernameInput);
+        // label password
+        var loginPasswordLabel = document.createElement("label");
+        loginPasswordLabel.setAttribute("for","login-password");
+        var passLabelText = document.createTextNode("Password");
+        loginPasswordLabel.appendChild(passLabelText);
+        loginForm.appendChild(loginPasswordLabel);
+        // input password
+        var loginPasswordInput = document.createElement("input");
+        loginPasswordInput.setAttribute("id","new-password");
+        loginPasswordInput.setAttribute("type","text");
+        loginPasswordInput.setAttribute("name","new-password");
+        loginPasswordInput.setAttribute("placeholder","Input Password");
+        loginForm.appendChild(loginPasswordInput);
+        // submit button
+        var loginSubmitButton = document.createElement("button");
+        loginSubmitButton.setAttribute("id","user-login");
+        loginSubmitButton.setAttribute("name","login-user");
+        loginSubmitButton.setAttribute("type","button");
+        var logSubmitText = document.createTextNode("Create");
+        loginSubmitButton.appendChild(logSubmitText);
+        loginForm.appendChild(loginSubmitButton);
+  // accountDiv.innerHTML =
+  //   "<button id=user-login-button>Login</button>" +
+  //   "<button id=new-user-button>New Account</button>" +
+  //   "<h4>New Account</h4>" +
+  //   "<p>Input new username and and password to create new user account.</p>" +
+  //   "<form id=new-user-form>" +
+  //   "<label for= new-username>Username</label>" + 
+  //   "<input id=new-username type=text name=new-username placeholder='Input new username'>" + 
+  //   "<label for=new-password>Password</label>" +
+  //   "<input id=new-password type=text name=new-password placeholder='Input wanted password'>" +
+  //   "<input type=button id=new-user name=submit-user value=Create>" +
+  //   "</form>";
   document
     .getElementById("user-login-button")
     .addEventListener("click", loginShow);
@@ -562,4 +689,5 @@ function sortData() {
     }
   }
 }
+
 
