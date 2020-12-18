@@ -14,7 +14,7 @@ body {
     /* firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgb(80, 80, 80); rgba(88, 88, 88, 0.178);
+    scrollbar-color: rgb(80, 80, 80) rgba(88, 88, 88, 0.178);
   }
   
   /* Chrome, Edge, and Safari */
@@ -31,7 +31,7 @@ body {
 *::-webkit-scrollbar-corner {
     background-color: rgb(110, 110, 110);        
 }
-*::.webkit-scrollbar-button {}
+
 
 
 .hidden{
