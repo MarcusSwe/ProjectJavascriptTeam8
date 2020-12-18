@@ -528,7 +528,7 @@ function ValidateLogin(name, pass) {
   var i;
   var correct;
   for (i = 0; i < userArray.length; i++) {
-    if (name == userArray[i].username) {
+    if (name + pass== userArray[i].username+userArray[i].password) {
       correct = true;
     }
   }
@@ -606,8 +606,8 @@ function newUserShow() {
         loginForm.appendChild(loginPasswordInput);
         // submit button
         var loginSubmitButton = document.createElement("button");
-        loginSubmitButton.setAttribute("id","user-login");
-        loginSubmitButton.setAttribute("name","login-user");
+        loginSubmitButton.setAttribute("id","new-user");
+        loginSubmitButton.setAttribute("name","submit-user");
         loginSubmitButton.setAttribute("type","button");
         var logSubmitText = document.createTextNode("Create");
         loginSubmitButton.appendChild(logSubmitText);
