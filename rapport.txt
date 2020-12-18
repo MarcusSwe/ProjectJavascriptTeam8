@@ -1,0 +1,13 @@
+Rapport för Team4. Chanzhou, Marcus och Emil
+Vår git: https://github.com/MarcusSwe/ProjectJavascriptTeam8
+vår Trello: https://trello.com/b/TYSofz3A/projektjavascript
+
+Agilt arbete: 
+Vi uppfattar det som lite svårt att komma igång direkt med det agila, men har absolut använt oss av de agila metoderna i den utsträckning vi har förstått dem. 
+Efter förutsättningarna så har vi lyckats ganska bra tycker vi. Det var ett helt nytt arbetssätt med två LÅÅÅNGA föreläsningar med Emil precis innan projektet började. Lite svårt att komma igång utan att vara helt insatt i hur de agila metoderna skall implementeras men vi tycker ändå att vi lyckades relativt väl. Om Yazeen hade haft hand om föreläsningen för Agila metoder så hade det med all säkerhet varit enklare att förstå. Emil verkar ju kunnig, men INTE en naturlig utbildare. 
+
+Enligt projektbeskrivningen skulle varje sprint vara 2 veckor men det blev omöjligt då tiden inte räckte till för tre sprinter á två veckor. Så satte vi våra sprinter till en vecka istället med möte varje tisdag på teams. Dessa möten har avhandlat sprint planning och sprint retro. Daily scrum har vi inte haft tillsammans på teams. Vi har dock kontinuerligt checkat av via mail och teams med frågor om koden, diskussion om features etc. Vi har även protokollfört våra möten. Detta bifogas nedan. 
+
+Såhär i efterhand så hade vi vunnit på att planera vår första sprint bättre. Det blev lite diffust om hur vi skulle använda våran git och hur vi praktiskt skulle jobba agilt. Hade vi läst på lite bättre i början så hade planeringen blivit bättre och enklare att följa. 
+
+Hade vi inte jobbat agilt så hade vi haft svårt att färdigställa projektet. Då vi alla är nybörjare i JS och aldrig har arbetat tillsammans tidigare så är det svårt att budgetera tid för alla olika funktioner. Det agila arbetssättet har bidragit till att vi har kunnat arbeta mera dynamiskt. Några features vi skrev upp från början hans inte med. Andra funktioner byggde på dessa features som inte blev av. Med ett agilt arbetssätt blir det enkelt att styra om riktningen och fortfarnade få en fungerande applikation. 
