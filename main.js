@@ -9,18 +9,22 @@ var dontJudgeMe = false;
 
 
 //hide and show functions
-function hide(...elements) {
-  elements.forEach((el) => {
-    el.classList.remove("visible");
-    el.classList.add("hidden");
-  })
+function hide(element) {
+  element.classList.remove("visible");
+  element.classList.add("hidden");
 }
 
-function show(...elements) {
-  elements.forEach((el) => {
-    el.classList.remove("hidden");
-    el.classList.add("visible");
-  })
+function show(element) {
+  element.classList.remove("hidden");
+  element.classList.add("visible");
+}
+
+function toggleDisplay(element) {
+  if (element.classList.contains("hidden")) {
+    show(element)
+  } else {
+    hide(element)
+  }
 }
 
 // Make newnote button and add properties.
@@ -117,10 +121,7 @@ function createNoteDiv(note) {
   var number = note.number;
 
 
-  //create string with tags
-  var tagString = "";
   tags.forEach((item) => {
-    //tagString += item + " ";
     //changed to handle image tags
     switch(item) {
          case "F":
@@ -178,6 +179,7 @@ function createNoteDiv(note) {
                      //vote button
                       var newVoteButton = document.createElement("input");
                       newVoteButton.setAttribute("id", "vote-b-" + number);
+                      newVoteButton.setAttribute("js-access", "");
                       newVoteButton.src = "upvote3.png";
                       newVoteButton.type = "image";
                       newVoteButton.setAttribute("class", "voteButton");
@@ -252,6 +254,7 @@ function createNoteDiv(note) {
             //show Replys             
             var showReplyButton = document.createElement("input");
             showReplyButton.setAttribute("id", "ReplyButton" + number);
+            showReplyButton.setAttribute("js-access", "");
             showReplyButton.src = "omegapog2.png";
             showReplyButton.type = "image";
             showReplyButton.setAttribute("class", "showReplyButton");
@@ -333,12 +336,7 @@ function createNoteDiv(note) {
 
 //open replay window up or close..
     document.getElementById("ReplyButton" + number).addEventListener("click", function(){
-      let el = document.getElementById("new-reply-parent-div" + number);
-      if (el.classList.contains("hidden")) {
-        show(el)
-      } else {
-        hide(el)
-      }
+      toggleDisplay(document.getElementById("new-reply-parent-div" + number));
     });
 
 
@@ -366,23 +364,39 @@ userArray.push({ username: "Changzhou", password: "456" });
 userArray.push({ username: "Marcus", password: "789" });
 // this div contains Login or Account forms
 var accountDiv = document.getElementById("login-div");
+var accountButton = document.getElementById("accountButton");
 
 // opens or closes accountDiv
-accountDiv.innerHTML = ""; // sets initial value of login div to ""
-document.getElementById("user-account").addEventListener("click", function () {
-  if (accountDiv.innerHTML == "") {
+//accountDiv.innerHTML = ""; // sets initial value of login div to ""
+accountButton.addEventListener("click", function () {
+
+  toggleDisplay(accountDiv)
+
+  /* if (accountDiv.innerHTML == "") {
     loginShow();    
     document.getElementById("login-div").style.display = "block";                   
     } else {
       
     accountClose();
     
-  }
+  } */
 });
 
 //logout function
 function logout() {
-  newNoteButton.style.visibility = "hidden";
+  var allButtons = document.querySelectorAll("[js-access]");
+  allButtons.forEach(el => {hide(el)});
+
+  var replyBoxes = document.querySelectorAll(".replyParent");
+  replyBoxes.forEach(el => {hide(el)});
+
+  show(document.getElementById("accountButton"));
+
+  newNoteWindowClose();
+
+  document.getElementById("login-state").innerHTML = "Not logged in";
+
+/*   newNoteButton.style.visibility = "hidden";
   logoutButton.style.visibility = "hidden";
   document.getElementById("login-state").innerHTML = "Not logged in";
   console.log(document.getElementsByClassName("replyChild"));
@@ -396,12 +410,18 @@ function logout() {
       document.getElementById("new-title-reply-button" + i).style.display = "none";
       document.getElementById("new-title-reply-textarea" + i).style.display = "none";
     };
-  }
-  newNoteWindowClose();
+  } */
+
 }
 //login function
 function login() {
-  newNoteButton.style.visibility = "visible";
+  var allButtons = document.querySelectorAll("[js-access]");
+  allButtons.forEach(el => {show(el)});
+
+  hide(accountButton);
+  hide(accountDiv);
+
+/*   newNoteButton.style.visibility = "visible";
   logoutButton.style.visibility = "visible";
   if (allNotesArray.length > 0) {
     var i;
@@ -414,12 +434,21 @@ function login() {
       document.getElementById("new-title-reply-textarea" + i).style.display = "block";
     };
   }
-  document.getElementById("login-div").style.display = "none";  
+  document.getElementById("login-div").style.display = "none"; */  
 }
+
+
+//Button to add user
+document.getElementById("new-user").addEventListener("click", function () {
+  new AddUser(
+    document.getElementById("new-username").value, 
+    document.getElementById("new-password").value);
+  document.getElementById("new-user-form").reset();
+});
+
 // constructs user from username+password and sends user to userArray
 function AddUser(name, password) {
-  this.username = name;
-  this.password = password;
+
   var newUser = { username: name, password: password };
   console.log("username; " + name);
   console.log("password; " + password);
@@ -432,7 +461,20 @@ function AddUser(name, password) {
     alert("Welcome " + name + ". Go to login to use your new acount.");
   }
 }
-// shows Login form in accountDiv
+
+// shows Login/new user form in accountDiv
+document.getElementById("user-login-button").addEventListener("click", ()=>{
+  show(document.getElementById("login-form"));
+  hide(document.getElementById("new-user-form"));
+});
+
+document.getElementById("new-user-button").addEventListener("click", ()=>{
+  hide(document.getElementById("login-form"));
+  show(document.getElementById("new-user-form"));
+});
+
+
+
 function loginShow() {
   accountDiv.innerHTML = "";
   //login button
@@ -522,9 +564,13 @@ function loginShow() {
   });
 }
 // Validates username / password. Sens you eiter in to app or displays login failed
+document.getElementById("user-login").addEventListener("click", function () {
+  ValidateLogin(
+    document.getElementById("login-username").value,
+    document.getElementById("login-password").value);
+});
 function ValidateLogin(name, pass) {
-  this.name = name;
-  this.pass = pass;
+
   var i;
   var correct;
   for (i = 0; i < userArray.length; i++) {
@@ -538,7 +584,7 @@ function ValidateLogin(name, pass) {
        name;
       xName2 = name;
     login();
-    accountClose();
+    // accountClose();
   } else {
     document.getElementById("login-state").innerHTML =
       "Login failed. Try again.";
