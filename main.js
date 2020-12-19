@@ -717,9 +717,9 @@ function sortData() {
         })
       })
 
-      sortButton.innerHTML = "sort by number"
+      sortButton.innerHTML = "Sort by date"
 
-    // sort by number
+    // sort by date
     }else {
       let newOrder = []
       notes.divs.forEach((el) => newOrder.push(el.getAttribute("js-noteDiv")))

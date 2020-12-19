@@ -353,6 +353,10 @@ aside {
     background-color: rgba(2, 213, 250, 0.918);
     height: 25px;
     width: 170px;
+    font-family: 'RursusCompactMonoMedium';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 16px;
 }
 
 #login-password:focus {
@@ -755,7 +759,7 @@ textarea {
     overflow: auto;
     box-shadow: 10px 10px 8px #00000063;
     position: relative; 
-    top: -198px;
+    top: -200px;
     width: 260px;
    
   
