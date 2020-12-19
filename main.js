@@ -9,22 +9,30 @@ var dontJudgeMe = false;
 
 
 //hide and show functions
-function hide(element) {
+function hideDisplay(element) {
   element.classList.remove("visible");
   element.classList.add("hidden");
 }
 
-function show(element) {
+function showDisplay(element) {
   element.classList.remove("hidden");
   element.classList.add("visible");
 }
 
 function toggleDisplay(element) {
   if (element.classList.contains("hidden")) {
-    show(element)
+    showDisplay(element)
   } else {
-    hide(element)
+    hideDisplay(element)
   }
+}
+
+function hideVis(element) {
+  element.style.visibility = "hidden";
+}
+
+function showVisi(element) {
+  element.style.visibility = "visible";
 }
 
 // Make newnote button and add properties.
@@ -45,11 +53,11 @@ logout();
 
 // Note Window open
 function newNoteWindowOpen() {
-  show(document.getElementById("constr-new-note"));
+  showDisplay(document.getElementById("constr-new-note"));
 }
 // Note Window close
 function newNoteWindowClose() {
-  hide(document.getElementById("constr-new-note"));
+  hideDisplay(document.getElementById("constr-new-note"));
 }
 
 /*gets information on note when user hits submit button. Sets al information to a new 
@@ -385,12 +393,12 @@ accountButton.addEventListener("click", function () {
 //logout function
 function logout() {
   var allButtons = document.querySelectorAll("[js-access]");
-  allButtons.forEach(el => {hide(el)});
+  allButtons.forEach(el => {hideVis(el)});
 
   var replyBoxes = document.querySelectorAll(".replyParent");
-  replyBoxes.forEach(el => {hide(el)});
+  replyBoxes.forEach(el => {hideDisplay(el)});
 
-  show(document.getElementById("accountButton"));
+  showVisi(document.getElementById("accountButton"));
 
   newNoteWindowClose();
 
@@ -416,10 +424,10 @@ function logout() {
 //login function
 function login() {
   var allButtons = document.querySelectorAll("[js-access]");
-  allButtons.forEach(el => {show(el)});
+  allButtons.forEach(el => {showVisi(el)});
 
-  hide(accountButton);
-  hide(accountDiv);
+  hideVis(accountButton);
+  hideDisplay(accountDiv);
 
 /*   newNoteButton.style.visibility = "visible";
   logoutButton.style.visibility = "visible";
@@ -464,13 +472,13 @@ function AddUser(name, password) {
 
 // shows Login/new user form in accountDiv
 document.getElementById("user-login-button").addEventListener("click", ()=>{
-  show(document.getElementById("login-form"));
-  hide(document.getElementById("new-user-form"));
+  showDisplay(document.getElementById("login-form"));
+  hideDisplay(document.getElementById("new-user-form"));
 });
 
 document.getElementById("new-user-button").addEventListener("click", ()=>{
-  hide(document.getElementById("login-form"));
-  show(document.getElementById("new-user-form"));
+  hideDisplay(document.getElementById("login-form"));
+  showDisplay(document.getElementById("new-user-form"));
 });
 
 
