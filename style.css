@@ -193,7 +193,7 @@ aside {
 }
 
 .loginDiv {
-    display: none;   
+    /* display: none;  */  
     max-width: 590px;
     margin: 5px;
     border: 2px solid black;
