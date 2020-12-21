@@ -5,6 +5,19 @@ var xTagFunTrue = false;
 var xTagMetaTrue = false;
 var xTagUrgentTrue = false;
 var dontJudgeMe = false;
+var colorSnumber = "";
+var colorSaver ="";
+var colorSarray = [];
+
+colorSarray.push(new colorSconst("","","","","","","","","","","","",""));
+colorSarray.push(new colorSconst("rgb(49, 60, 211)","rgb(49, 60, 211)","rgb(93, 101, 226)","rgb(93, 101, 226)","rgb(93, 101, 226)","rgb(93, 101, 226)","rgb(93, 101, 226)","rgb(49, 60, 211)","rgb(93, 101, 226)","rgb(93, 101, 226)","rgb(49, 60, 211)","rgb(49, 60, 211)","rgb(93, 101, 226)"));
+colorSarray.push(new colorSconst("rgb(44, 82, 23)","rgb(179, 255, 134)","rgb(97, 194, 41)","rgb(97, 194, 41)","rgb(97, 194, 41)","rgb(97, 194, 41)","rgb(97, 194, 41)","rgb(179, 255, 134)","rgb(97, 194, 41)","rgb(97, 194, 41)","rgb(179, 255, 134)","rgb(179, 255, 134)","rgb(97, 194, 41)"));
+colorSarray.push(new colorSconst("rgb(243, 51, 157)","rgb(243, 51, 157)"," rgb(192, 47, 127)","rgb(93, 101, 226)"," rgb(192, 47, 127)"," rgb(192, 47, 127)"," rgb(192, 47, 127)","rgb(243, 51, 157)"," rgb(192, 47, 127)"," rgb(192, 47, 127)","rgb(243, 51, 157)","rgb(243, 51, 157)"," rgb(192, 47, 127)"));
+colorSarray.push(new colorSconst(" rgb(252, 102, 102)"," rgb(252, 102, 102)","rgb(236, 56, 56)","rgb(236, 56, 56)","rgb(236, 56, 56)","rgb(236, 56, 56)","rgb(236, 56, 56)"," rgb(252, 102, 102)","rgb(236, 56, 56)","rgb(236, 56, 56)"," rgb(252, 102, 102)"," rgb(252, 102, 102)","rgb(236, 56, 56)"));
+colorSarray.push(new colorSconst("rgb(255, 242, 65)","rgb(255, 242, 65)"," rgb(180, 171, 34)"," rgb(180, 171, 34)"," rgb(180, 171, 34)"," rgb(180, 171, 34)"," rgb(180, 171, 34)","rgb(255, 242, 65)"," rgb(180, 171, 34)"," rgb(180, 171, 34)","rgb(255, 242, 65)","rgb(255, 242, 65)"," rgb(180, 171, 34)"));
+colorSarray.push(new colorSconst("rgb(0, 0, 0)","rgb(0, 0, 0)","rgb(121, 121, 121)","rgb(121, 121, 121)","rgb(121, 121, 121)","rgb(121, 121, 121)","rgb(121, 121, 121)","rgb(0, 0, 0)","rgb(121, 121, 121)","rgb(121, 121, 121)","rgb(0, 0, 0)","rgb(121, 121, 121)","rgb(121, 121, 121)"));
+colorSarray.push(new colorSconst("rgb(75, 0, 250)","rgb(75, 0, 250)","rgb(155, 112, 255)","rgb(155, 112, 255)","rgb(155, 112, 255)","rgb(155, 112, 255)","rgb(155, 112, 255)","rgb(75, 0, 250)","rgb(155, 112, 255)","rgb(155, 112, 255)","rgb(75, 0, 250)","rgb(75, 0, 250)","rgb(155, 112, 255)"));
+colorSarray.push(new colorSconst("rgb(46, 155, 137)","rgb(46, 155, 137)","rgb(70, 255, 224)","rgb(70, 255, 224)","rgb(70, 255, 224)","rgb(70, 255, 224)","rgb(70, 255, 224)","rgb(46, 155, 137))","rgb(70, 255, 224)","rgb(70, 255, 224)","rgb(46, 155, 137)","rgb(46, 155, 137)","rgb(70, 255, 224)"));
 
 //arrays to save all notes
 var allNotesArray = [];
@@ -76,7 +89,7 @@ function getInputFromForm() {
   var userInputSubject = document.getElementById("constr-subject").value;
 
   var userInputDate = new Date();
-
+  
   // create new note class
   var newNote = new Note(
     userInputTitle,
@@ -90,6 +103,9 @@ function getInputFromForm() {
 
   createNoteDiv(newNote);
 
+  document.getElementById("constr-submit").removeEventListener("click", getInputFromForm);
+  setTimeout(function () { 
+  document.getElementById("constr-submit").addEventListener("click", getInputFromForm); }, 700);
   document.getElementById("constr-form").reset();
 }
 /* 
@@ -107,6 +123,7 @@ function Note(title, tags, subject, date) {
   this.replies = [];
   this.number = startId++;
   this.voteNumber = 0;
+  this.colorReplyTheme = 0;
 }
 
 //Create new note here
@@ -272,11 +289,39 @@ function createNoteDiv(note) {
   xReplyChild.setAttribute("class", "replyChild");
   document.getElementById("new-reply-parent-div" + note.number).appendChild(xReplyChild);
 
-  //    2.
+  //    2.  Top Secret Eyes Closed
   if (dontJudgeMe) {
     document.getElementById("new-reply-parent-div" + note.number).style.top = "-220px";
     dontJudgeMe = false;
   }
+
+  // create theme color 
+  colorSnumber = note.number;
+  colorS();
+  note.colorReplyTheme = colorSaver;
+  
+
+  // animation note creation
+  document.getElementById("new-main-div" + colorSnumber).style.opacity = 0.0
+  let b = 0;
+  let z = 0;
+  let ani = 0;   
+
+  function aniMation() {
+  ani = setInterval(function() {  
+      document.getElementById("new-main-div" + colorSnumber).style.opacity = b;     
+      b = z*5*0.01;              
+      z++;
+    }, 25);
+  }
+
+  aniMation();
+  setTimeout(function(){ 
+  clearTimeout(ani);
+ }, 550);
+
+
+
 
   // setting eventlistener to reply button. Adds data from textfield to new div in reply parent div
   document.getElementById("new-title-reply-button" + note.number)
@@ -289,7 +334,8 @@ function createNoteDiv(note) {
           .getElementById("new-reply-child-div" + note.number)
           .prepend(newReply);
         //changed order tp push newest reply first  
-        newReply.setAttribute("id", "reply-div" + note.number);
+        newReply.setAttribute("id", "reply-div" + note.number);        
+        document.getElementById("reply-div" + note.number).style.backgroundColor = colorSarray[note.colorReplyTheme].replyDiv;
         newReply.setAttribute("class", "reply");
         document.getElementById("new-title-reply-textarea" + note.number).value = "";
         note.replies.push(userReplyText);
@@ -491,4 +537,42 @@ function sortNotes() {
 
     }
   }
+}
+
+
+//---------- Random Colors ----------------
+
+function colorS () {
+  let i = Math.floor(Math.random() * colorSarray.length);  
+  colorSaver = i;
+  document.getElementById("new-title-div" + colorSnumber).style.color = colorSarray[i].title;
+  document.getElementById("new-main-div" + colorSnumber).style.borderColor = colorSarray[i].main;  
+  document.getElementById("new-subject-div" + colorSnumber).style.backgroundColor = colorSarray[i].subject;
+  document.getElementById("vote-n-" + colorSnumber).style.color = colorSarray[i].vote;
+  document.getElementById("new-tags-div" + colorSnumber).style.color = colorSarray[i].tag;
+  document.getElementById("commentNumbers" + colorSnumber).style.color = colorSarray[i].comment;
+  document.getElementById("new-date-div" + colorSnumber).style.color = colorSarray[i].date;
+
+  document.getElementById("new-reply-parent-div" + colorSnumber).style.borderColor = colorSarray[i].replyParent;
+  document.getElementById("new-title-reply-textarea" + colorSnumber).style.backgroundColor = colorSarray[i].replyTextareaBackground;
+  document.getElementById("new-title-reply-textarea" + colorSnumber).style.borderColor = colorSarray[i].replyTextareaBorder;
+  document.getElementById("new-title-reply-button" + colorSnumber).style.borderColor = colorSarray[i].replyButtonBorder;
+  document.getElementById("new-title-reply-button" + colorSnumber).style.color = colorSarray[i].replyButtonColor;
+
+}
+
+function colorSconst (yTitle, yMain, ySubject, yVote, yTag, yComment, yDate, yReplyparent, yReplytextareaBackground, yReplytextareaBorder, yReplybuttonBorder, yReplybuttonColor, yreplyDiv){
+  this.title = yTitle;
+  this.main = yMain;
+  this.subject = ySubject;
+  this.vote = yVote;
+  this.tag = yTag;
+  this.comment = yComment;
+  this.date = yDate;
+  this.replyParent = yReplyparent;
+  this.replyTextareaBackground = yReplytextareaBackground;
+  this.replyTextareaBorder = yReplytextareaBorder;
+  this.replyButtonBorder = yReplybuttonBorder;
+  this.replyButtonColor = yReplybuttonColor;
+  this.replyDiv = yreplyDiv;
 }
